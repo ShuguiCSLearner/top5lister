@@ -28,7 +28,7 @@ export default function LoginScreen(){
     };
     return (
       <div>
-        <Grid item xs={12} sm={8} md={12} elevation={6} square>
+        <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '10vh' }}>
           <Box
             sx={{
               my: 8,

@@ -6,16 +6,17 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 //
 import { GlobalStoreContext } from '../store'
 
 export default function SplashScreen() {
     return (
-        <div>
-        <Grid item xs={12} sm={8} md={12} elevation={6} square>
+        <div id="splash-screen">
+        <Typography component="h1" variant="h4" color="black" fontWeight='bold' align='center'>
+            Welcome to Top5Lister
+        </Typography>
+        <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '10vh' }}>
           <Box
             sx={{
               my: 8,
@@ -25,30 +26,37 @@ export default function SplashScreen() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <Button
+                variant="contained"
+                href="/login/"
+                sx={{ mt: 3, mb: 2 }}
+                style={{maxWidth: '250px',  minWidth: '250px'}}
+              >
+                Login
+              </Button>
               <Button
-                type="submit"
-                fullWidth
+                variant="contained"
+                href="/register/"
+                sx={{ mt: 3, mb: 2 }}
+                style={{maxWidth: '250px',  minWidth: '250px'}}
+              >
+                Create Account
+              </Button>
+              <Button
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                style={{maxWidth: '250px',  minWidth: '250px'}}
               >
-                Sign In
+                Continue As Guest
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="/register/" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
         </Grid>
+        <Typography component="h1" variant="h5" color="black" fontWeight='bold' align='center'>
+            This is a web application that you can list your top 5 favorite things and find other users that have same interests
+          </Typography>
+          <Typography component="h1" variant="h6" color="black" align='center'>
+            Developer @Shugui Chen
+          </Typography>
       </div>
     )
 }
