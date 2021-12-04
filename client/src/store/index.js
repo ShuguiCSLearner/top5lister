@@ -330,33 +330,58 @@ function GlobalStoreContextProvider(props) {
                 history.push("/top5list/" + top5List._id);
             }
         }
+        console.log(store.currentList)
     }
 
-    store.moveItem = function (start, end) {
-        start -= 1;
-        end -= 1;
-        if (start < end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i < end; i++) {
-                store.currentList.items[i] = store.currentList.items[i + 1];
-            }
-            store.currentList.items[end] = temp;
-        }
-        else if (start > end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i > end; i--) {
-                store.currentList.items[i] = store.currentList.items[i - 1];
-            }
-            store.currentList.items[end] = temp;
-        }
+    // store.moveItem = function (start, end) {
+    //     start -= 1;
+    //     end -= 1;
+    //     if (start < end) {
+    //         let temp = store.currentList.items[start];
+    //         for (let i = start; i < end; i++) {
+    //             store.currentList.items[i] = store.currentList.items[i + 1];
+    //         }
+    //         store.currentList.items[end] = temp;
+    //     }
+    //     else if (start > end) {
+    //         let temp = store.currentList.items[start];
+    //         for (let i = start; i > end; i--) {
+    //             store.currentList.items[i] = store.currentList.items[i - 1];
+    //         }
+    //         store.currentList.items[end] = temp;
+    //     }
 
-        // NOW MAKE IT OFFICIAL
-        store.updateCurrentList();
-    }
+    //     // NOW MAKE IT OFFICIAL
+    //     store.updateCurrentList();
+    // }
 
     store.updateItem = function (index, newItem) {
         store.currentList.items[index] = newItem;
         store.updateCurrentList();
+    }
+
+    store.saveList = function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
+        store.currentList.name = listName;
+        store.currentList.items[0] = itemName1;
+        store.currentList.items[1] = itemName2;
+        store.currentList.items[2] = itemName3;
+        store.currentList.items[3] = itemName4;
+        store.currentList.items[4] = itemName5;
+        store.updateCurrentList();
+        store.closeCurrentList();
+    }
+    
+    store.publishList = function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
+        store.currentList.name = listName;
+        store.currentList.items[0] = itemName1;
+        store.currentList.items[1] = itemName2;
+        store.currentList.items[2] = itemName3;
+        store.currentList.items[3] = itemName4;
+        store.currentList.items[4] = itemName5;
+        store.currentList.hasPublished = true;
+        console.log(store.currentList.hasPublished);
+        store.updateCurrentList();
+        store.closeCurrentList();
     }
 
     store.updateCurrentList = async function () {

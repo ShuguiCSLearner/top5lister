@@ -41,6 +41,23 @@ function Top5Item(props) {
     let { index } = props;
     let itemClass = "top5-item";
 
+    // if (editActive) {
+    //     itemElement = 
+    //     <TextField
+    //     margin="normal"
+    //     required
+    //     fullWidth
+    //     id={"item-input-" + (index+1)}
+    //     label="Top 5 Item Name "
+    //     name="name"
+    //     autoComplete="Top 5 Item Name"
+    //     onKeyPress={handleKeyPress}
+    //     defaultValue={props.text}
+    //     inputProps={{style: {fontSize: 48}}}
+    //     InputLabelProps={{style: {fontSize: 24}}}
+    //     autoFocus
+    //     />
+    // }
     let itemElement = 
         <ListItem
             disabled = {store.isItemEditActive}
@@ -49,35 +66,12 @@ function Top5Item(props) {
             className={itemClass}
             sx={{ display: 'flex', p: 1 }}
             style={{
-                fontSize: '48pt',
+                fontSize: '28pt',
                 width: '100%'
             }}
         >
-        <Box sx={{ p: 1 }}>
-            <IconButton aria-label='edit' onClick={handleToggleEdit} disabled = {store.isItemEditActive}>
-                <EditIcon style={{fontSize:'48pt'}}  />
-            </IconButton>
-        </Box>
-            <Box sx={{ p: 1, flexGrow: 1 }}>{props.text}</Box>
+            <TextField sx={{ p: 1, flexGrow: 1 }} id={'item-input' + (index+1)} defaultValue={props.text}></TextField>
         </ListItem>
-
-    if (editActive) {
-        itemElement = 
-        <TextField
-        margin="normal"
-        required
-        fullWidth
-        id={"item-input-" + (index+1)}
-        label="Top 5 Item Name "
-        name="name"
-        autoComplete="Top 5 Item Name"
-        onKeyPress={handleKeyPress}
-        defaultValue={props.text}
-        inputProps={{style: {fontSize: 48}}}
-        InputLabelProps={{style: {fontSize: 24}}}
-        autoFocus
-        />
-    }
     
     return (
         itemElement

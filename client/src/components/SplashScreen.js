@@ -13,7 +13,7 @@ import { GlobalStoreContext } from '../store'
 export default function SplashScreen() {
     return (
         <div id="splash-screen">
-        <Typography component="h1" variant="h4" color="black" fontWeight='bold' align='center'>
+        <Typography component="h1" variant="h3" color="black" fontWeight='bold' align='center'>
             Welcome to Top5Lister
         </Typography>
         <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '10vh' }}>

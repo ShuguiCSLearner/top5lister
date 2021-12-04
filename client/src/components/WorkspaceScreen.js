@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import TextField from '@mui/material/TextField';
 import SortIcon from '@mui/icons-material/Sort';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 /*
     This React component lets us edit a loaded list, which only
@@ -29,6 +31,7 @@ function WorkspaceScreen() {
         let loadingListID = url.substring(indexBeforeURL+1);
         store.setCurrentList(loadingListID);
     }, []);
+
 
     let editItems = "";
     if (store.currentList) {
@@ -54,7 +57,6 @@ function WorkspaceScreen() {
         aria-label="close"
         id="home-list-button"
         size="large"
-        // onClick={handleCreateNewList}
         disabled={true}
     >
         <HomeIcon style={{ fontSize: 50 ,color:'grey'}}/>
@@ -68,7 +70,6 @@ let groupsButton =
         aria-label="close"
         id="all-list-button"
         size="large"
-        // onClick={handleCreateNewList}
         disabled={true}
     >
         <GroupsIcon style={{ fontSize: 50 ,color:'grey'}}/>
@@ -82,7 +83,6 @@ let personButton =
         aria-label="close"
         id="user-list-button"
         size="large"
-        // onClick={handleCreateNewList}
         disabled={true}
     >
         <PersonIcon style={{ fontSize: 50 ,color:'grey'}}/>
@@ -96,7 +96,6 @@ let sigmaButton =
         aria-label="close"
         id="community-list-button"
         size="large"
-        // onClick={handleCreateNewList}
         disabled={true}
     >
         <FunctionsIcon style={{ fontSize: 50 ,color:'grey'}}/>
@@ -130,7 +129,35 @@ let sortByButton =
         <SortIcon style={{ fontSize: 50 ,color:'grey'}}/>
     </Button>
     </div>
+    let save = true;
+    function toggleSave(){
+        save = false;
+        console.log("publishing");
+    }
 
+
+    const handleSubmit = (event) => {
+        console.log("submit")
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        let listName = formData.get('list-name-textfield');
+        let itemName1 = formData.get('item-name1-textfield');
+        let itemName2 = formData.get('item-name2-textfield');
+        let itemName3 = formData.get('item-name3-textfield');
+        let itemName4 = formData.get('item-name4-textfield');
+        let itemName5 = formData.get('item-name5-textfield');
+        if(listName === "" || itemName1 === "" || itemName2 === "" || itemName3 === "" || itemName4 === "" || itemName5 === "" ){
+            console.log("empty")
+        }
+        else{
+            if(save === true){  //save list
+                store.saveList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
+            }
+            else{  //publish list
+                store.publishList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
+            }
+        }
+    }
     return (
         <div id="top5-list-selector">
             <div id="list-selector-heading">
@@ -143,7 +170,8 @@ let sortByButton =
             {sortByButton}
             
             </div>
-            <div id="top5-workspace">
+            {/* <div id="top5-workspace">
+                <TextField className="workspace-list-name" defaultValue={store.currentList.name}/>
                 <div id="workspace-edit">
                     <div id="edit-numbering">
                         <div className="item-number"><Typography variant="h3">1.</Typography></div>
@@ -154,7 +182,118 @@ let sortByButton =
                     </div>
                     {editItems}
                 </div>
+                <div id="save-button">
+                    <Button>
+                        Save
+                    </Button>
+                </div>
+                <div id="publish-button">
+                    <Button>
+                        Publish
+                    </Button>
+                </div>
+            </div> */}
+            <div id="top5-workspace">
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <div id="top5-workspace-textfield-part2">
+                        <div id="save-button">
+                            <Button variant="outlined" style={{maxWidth: '75px',  minWidth: '75px'}} type="submit">
+                                Save
+                            </Button>
+                        </div>
+                        <div id="publish-button">
+                            <Button variant="outlined" style={{maxWidth: '75px',  minWidth: '75px'}} type="submit" onClick={toggleSave}>
+                                Publish
+                            </Button>
+                        </div>
+                    </div>
+                    <div id="top5-workspace-textfield">
+                        <Grid container spacing={1}>
+                            <Grid item xs={3} md={12}>
+                                <TextField
+                                name="list-name-textfield"
+                                id="list-name-textfield"
+                                required
+                                style={{width: 600}}
+                                defaultValue={store.currentList.name}
+                                inputProps={{style: {fontSize:26}}}
+                                />
+                            </Grid>
+                            <Grid item xs={3} md={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>1.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={11}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name1-textfield"
+                                    id="item-name1-textfield"
+                                    required
+                                    style={{width: 1200}} 
+                                    defaultValue={store.currentList.items[0]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>2.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={11}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name2-textfield"
+                                    id="item-name2-textfield"
+                                    required
+                                    style={{width: 1200}} 
+                                    defaultValue={store.currentList.items[1]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>3.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={11}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name3-textfield"
+                                    id="item-name3-textfield"
+                                    required
+                                    style={{width: 1200}} 
+                                    defaultValue={store.currentList.items[2]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>4.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={11}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name4-textfield"
+                                    id="item-name4-textfield"
+                                    required
+                                    style={{width: 1200}} 
+                                    defaultValue={store.currentList.items[3]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>5.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={11}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name5-textfield"
+                                    id="item-name5-textfield"
+                                    required
+                                    style={{width: 1200}} 
+                                    defaultValue={store.currentList.items[4]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Box>
             </div>
+
             <div id="top5-statusbar">
                 <IconButton 
                     color="primary" 

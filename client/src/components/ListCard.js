@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import AuthContext from '../auth'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
@@ -24,6 +25,7 @@ import Grid from '@mui/material/Grid';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair } = props;
@@ -112,10 +114,12 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            button
+            // className='list-shape'
+            // button
             style={{
                 fontSize: '10pt',
-                width: '100%'
+                width: '100%',
+                background:'rgb(248, 253, 170)'
             }}
         >
                 {/* <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box> */}
@@ -129,19 +133,19 @@ function ListCard(props) {
                     <Grid item xs={3} md={1}>
                         {thumbDownButton}
                     </Grid>
-                    <Grid item xs={6} md={1}>
+                    <Grid item xs={3} md={1}>
                         {deleteButton}
                     </Grid>
-                    <Grid item xs={6} md={12}>
+                    <Grid item xs={3} md={12}>
                         {authorText}
                     </Grid>
-                    <Grid item xs={6} md={7}>
+                    <Grid item xs={3} md={7}>
                         {editButton}
                     </Grid>
-                    <Grid item xs={6} md={4}>
+                    <Grid item xs={3} md={4}>
                         {viewText}
                     </Grid>
-                    <Grid item xs={6} md={1}>
+                    <Grid item xs={3} md={1}>
                         {expandButton}
                     </Grid>
                 </Grid>

@@ -23,7 +23,7 @@ function EditToolbar() {
     }  
     return (
         <div id="edit-toolbar">
-            <Button 
+            {/* <Button 
                 disabled = {store.isItemEditActive}
                 id='undo-button'
                 variant="contained">
@@ -34,14 +34,14 @@ function EditToolbar() {
                 id='redo-button'
                 variant="contained">
                     <RedoIcon />
-            </Button>
+            </Button> 
             <Button
                 disabled = {store.isItemEditActive}
                 id='close-button'
                 onClick={handleClose}
                 variant="contained">
                     <CloseIcon />
-            </Button>
+            </Button>*/}
         </div>
     )
 }
