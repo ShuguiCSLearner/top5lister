@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import List from '@mui/material/List';
 import { Button } from '@mui/material';
 
 import Typography from '@mui/material/Typography';
@@ -15,6 +16,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Grid from '@mui/material/Grid';
+import CommentCard from './CommentCard';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -74,13 +76,11 @@ function ListCard(props) {
         <IconButton onClick={()=>{console.log("like")}} aria-label='like' //</Box>disabled={store.isListNameEditActive}
         >
             <ThumbUpIcon style={{fontSize:'24pt'}} />
-            {likeNumber}
         </IconButton>
     let thumbDownButton = 
         <IconButton onClick={()=>{console.log("dislike")}} aria-label='dislike' //</Box>disabled={store.isListNameEditActive}
         >
             <ThumbDownIcon style={{fontSize:'24pt'}} />
-            {dislikeNumber}
         </IconButton>
     let deleteButton = 
         <IconButton onClick={(event) => {
@@ -112,9 +112,39 @@ function ListCard(props) {
         </div>
     }
     let expandButton = 
-        <IconButton onClick={(event)=> {setHasExpand(true); }}>
+        <IconButton onClick={handleExpandMore}>
             <ExpandMoreIcon/>
         </IconButton>
+    let itemListBoard =
+        <div id="itemListBoard">
+            <div className = 'item-list-board-item'>1. {idNamePair.items[0]}</div>
+            <div className = 'item-list-board-item'>2. {idNamePair.items[1]}</div>
+            <div className = 'item-list-board-item'>3. {idNamePair.items[2]}</div>
+            <div className = 'item-list-board-item'>4. {idNamePair.items[3]}</div>
+            <div className = 'item-list-board-item'>5. {idNamePair.items[4]}</div>
+        </div>
+        //     </Grid>
+        // </Grid>
+    
+    let commentBoard =
+        <div id = "commentBoard">
+            <div id = "commentBoardComment">
+                <List sx={{ width: '90%', left: '5%', bgcolor: '#d4d4f5'}}>
+                {
+                    idNamePair.comments.map((comment) => (
+                        <CommentCard
+                            comment={comment}
+                        />
+                    ))
+                }
+                </List>;
+            </div>
+            <div id = "commentBoardTextField">
+                {/* <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+
+                </Box> */}
+            </div>
+        </div>
     if(hasExpand){
         expandButton = 
         <IconButton onClick={(event)=> {setHasExpand(false); }}>
@@ -123,6 +153,13 @@ function ListCard(props) {
     }
     // This variable below control the color of the list card based on whether list has been publish or not 
     let displayListCardColor = idNamePair.hasPublished ? '#d4d4f5' : '#fffff1'
+    //increment view + 1
+    function handleExpandMore(event){
+        setHasExpand(true);
+        if(idNamePair.hasPublished){
+            store.incrementView(idNamePair._id);
+        }
+    }
 
     let cardElementCollapse =
         <ListItem
@@ -132,14 +169,20 @@ function ListCard(props) {
             background:displayListCardColor}}>
                 {/* <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box> */}
                 <Grid container spacing={0}>
-                    <Grid item xs={3} md={9}>
+                    <Grid item xs={3} md={8}>
                         <Typography variant="h4"> {idNamePair.name}</Typography>
                     </Grid>
-                    <Grid item xs={3} md={1}>
+                    <Grid item xs={3} md={0.5}>
                         {thumbUpButton}
                     </Grid>
-                    <Grid item xs={3} md={1}>
+                    <Grid item xs={3} md={1} mt={1}>
+                        {likeNumber}
+                    </Grid>
+                    <Grid item xs={3} md={0.5}>
                         {thumbDownButton}
+                    </Grid>
+                    <Grid item xs={3} md={1} mt={1}>
+                        {dislikeNumber}
                     </Grid>
                     <Grid item xs={3} md={1}>
                         {deleteButton}
@@ -147,10 +190,10 @@ function ListCard(props) {
                     <Grid item xs={3} md={12}>
                         {authorText}
                     </Grid>
-                    <Grid item xs={3} md={7}>
+                    <Grid item xs={3} md={8}>
                         {editButton}
                     </Grid>
-                    <Grid item xs={3} md={4}>
+                    <Grid item xs={3} md={3}>
                         {viewText}
                     </Grid>
                     <Grid item xs={3} md={1}>
@@ -167,31 +210,37 @@ function ListCard(props) {
             sx={{ marginTop: '10px', display: 'flex', p: 1, borderRadius: 5, border: 1, borderColor: 'grey',fontSize: '10pt',width: '100%',
             background:displayListCardColor}}>
             <Grid container spacing={0}>
-                <Grid item xs={3} md={9}>
+                <Grid item xs={3} md={8}>
                     <Typography variant="h4"> {idNamePair.name}</Typography>
                 </Grid>
-                <Grid item xs={3} md={1}>
+                <Grid item xs={3} md={0.5}>
                     {thumbUpButton}
                 </Grid>
-                <Grid item xs={3} md={1}>
+                <Grid item xs={3} md={1} mt={1}>
+                    {likeNumber}
+                </Grid>
+                <Grid item xs={3} md={0.5}>
                     {thumbDownButton}
+                </Grid>
+                <Grid item xs={3} md={1} mt={1}>
+                    {dislikeNumber}
                 </Grid>
                 <Grid item xs={3} md={1}>
                     {deleteButton}
                 </Grid>
-                <Grid item xs={100} md={12}>
+                <Grid item xs={3} md={12}>
                     {authorText}
                 </Grid>
-                <Grid item xs={100} md={6}>
-                    list item board area
+                <Grid item xs={3} md={6}>
+                    {itemListBoard}
                 </Grid>
                 <Grid item xs={3} md={6}>
-                    comment area
+                    {commentBoard}
                 </Grid>
-                <Grid item xs={3} md={7}>
+                <Grid item xs={3} md={8}>
                     {editButton}
                 </Grid>
-                <Grid item xs={3} md={4}>
+                <Grid item xs={3} md={3}>
                     {viewText}
                 </Grid>
                 <Grid item xs={3} md={1}>

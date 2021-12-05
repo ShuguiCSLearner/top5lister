@@ -378,12 +378,37 @@ function GlobalStoreContextProvider(props) {
         store.currentList.items[3] = itemName4;
         store.currentList.items[4] = itemName5;
         store.currentList.hasPublished = true;
+        store.currentList.publishDate = new Date();
         store.updateCurrentList();
         store.closeCurrentList();
     }
-
-    store.incrementView = function (){
-        store.currentList.view = store.currentList.view + 1;
+    // Increment the view of the list by 1
+    store.incrementView = async function (id){
+        let response = await api.getTop5ListById(id);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            top5List.view = top5List.view+1;
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListPairs(top5List) {
+                        response = await api.getTop5ListPairs();
+                        if (response.data.success) {
+                            let pairsArray = response.data.idNamePairs;
+                            storeReducer({
+                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                payload: {
+                                    idNamePairs: pairsArray,
+                                    top5List: top5List
+                                }
+                            });
+                        }
+                    }
+                    getListPairs(top5List);
+                }
+            }
+            updateList(top5List);
+        }
     }
 
     store.updateCurrentList = async function () {

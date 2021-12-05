@@ -34,21 +34,21 @@ function WorkspaceScreen() {
     }, []);
 
 
-    let editItems = "";
-    if (store.currentList) {
-        editItems = 
-            <List id="edit-items" sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                {
-                    store.currentList.items.map((item, index) => (
-                        <Top5Item 
-                            key={'top5-item-' + (index+1)}
-                            text={item}
-                            index={index} 
-                        />
-                    ))
-                }
-            </List>;
-    }
+    // let editItems = "";
+    // if (store.currentList) {
+    //     editItems = 
+    //         <List id="edit-items" sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    //             {
+    //                 store.currentList.items.map((item, index) => (
+    //                     <Top5Item 
+    //                         key={'top5-item-' + (index+1)}
+    //                         text={item}
+    //                         index={index} 
+    //                     />
+    //                 ))
+    //             }
+    //         </List>;
+    // }
 
     // header
     let homeButton = 
@@ -176,12 +176,12 @@ let sortByButton =
                             />
                         </div>
                         <div id="save-button">
-                            <Button variant="outlined" style={{maxWidth: '65px',  minWidth: '65px'}} type="submit">
+                            <Button variant="outlined" style={{maxWidth: '67px',  minWidth: '67px'}} type="submit">
                                 Save
                             </Button>
                         </div>
                         <div id="publish-button">
-                            <Button variant="outlined" style={{maxWidth: '65px',  minWidth: '65px'}} type="submit" onClick={toggleSave}>
+                            <Button variant="outlined" style={{maxWidth: '67px',  minWidth: '67px'}} type="submit" onClick={toggleSave}>
                                 Publish
                             </Button>
                         </div>
