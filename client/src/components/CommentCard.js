@@ -5,11 +5,12 @@ import Typography from '@mui/material/Typography';
 
 function CommentCard(props){
     const { comment } = props;
-
-    return(
-        <ListItem xs={{background:'#D4AF37'}}>
+    let commentCard = 
+        <ListItem style={{background:'#d4af37', borderColor: 'black', borderRadius: 10, marginTop: '5pt'}}>
             <Typography>{comment}</Typography>
         </ListItem>
+    return(
+        commentCard
     )
 }
 

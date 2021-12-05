@@ -39,6 +39,11 @@ function ListCard(props) {
             store.setCurrentList(id);
         }
     }
+    function handleSubmit(event){
+        event.preventDefault();
+        alert('The name you entered was: ${name}');
+      }
+    
     // function handleToggleEdit(event) {
     //     event.stopPropagation();
     //     toggleEdit();
@@ -137,12 +142,17 @@ function ListCard(props) {
                         />
                     ))
                 }
-                </List>;
+                </List>
             </div>
             <div id = "commentBoardTextField">
-                {/* <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-
-                </Box> */}
+                {/* <TextField
+                    name="send-comment-textfield"
+                    id="send-comment-textfile"
+                    label="Add Comment"
+                    required
+                    fullWidth
+                    inputProps={{style: {fontSize:12}}}
+                /> */}
             </div>
         </div>
     if(hasExpand){
