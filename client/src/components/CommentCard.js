@@ -5,9 +5,15 @@ import Typography from '@mui/material/Typography';
 
 function CommentCard(props){
     const { comment } = props;
+    let index = comment.indexOf("-");
+    let userName = comment.substring(0,index);
+    let commentText = comment.substring(index+1);
     let commentCard = 
         <ListItem style={{background:'#d4af37', borderColor: 'black', borderRadius: 10, marginTop: '5pt'}}>
-            <Typography>{comment}</Typography>
+            <div>
+                <Typography sx={{color: 'blue', textDecorationLine: "underline"}}>{userName}</Typography>
+                <Typography>{commentText}</Typography>
+            </div>
         </ListItem>
     return(
         commentCard

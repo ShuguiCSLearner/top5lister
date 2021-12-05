@@ -145,14 +145,14 @@ function ListCard(props) {
                 </List>
             </div>
             <div id = "commentBoardTextField">
-                {/* <TextField
+                <TextField
                     name="send-comment-textfield"
                     id="send-comment-textfile"
                     label="Add Comment"
                     required
                     fullWidth
                     inputProps={{style: {fontSize:12}}}
-                /> */}
+                />
             </div>
         </div>
     if(hasExpand){

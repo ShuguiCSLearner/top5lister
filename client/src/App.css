@@ -365,7 +365,7 @@ body {
   height: 260pt;
   display: flex;
   flex-direction: column;
-  background-color: #d4d4f5;
+  background-color: inherit;
   border-radius: 10pt;
 }
 #commentBoardComment{
@@ -383,7 +383,7 @@ body {
   display: flex;
   font-size: 35pt;
   color: #ceaa39;
-  left: 5%;
+  left: 0%;
 }
 #commentBoardTextField{
   position: relative;
