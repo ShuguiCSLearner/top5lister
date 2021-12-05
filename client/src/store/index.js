@@ -236,8 +236,6 @@ function GlobalStoreContextProvider(props) {
             hasPublished: false,
             publishDate: new Date()
         };
-        var today = new Date();
-        console.log(today);
         const response = await api.createTop5List(payload);
         if (response.data.success) {
             let newList = response.data.top5List;

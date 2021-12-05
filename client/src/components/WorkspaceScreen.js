@@ -165,6 +165,16 @@ let sortByButton =
             <div id="top5-workspace">
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <div id="top5-workspace-textfield-part2">
+                        <div className="list-name-corresponding-list" xs={3} md={6}>
+                            <TextField
+                            name="list-name-textfield"
+                            id="list-name-textfield"
+                            required
+                            fullWidth
+                            defaultValue={store.currentList.name}
+                            inputProps={{style: {fontSize:26}}}
+                            />
+                        </div>
                         <div id="save-button">
                             <Button variant="outlined" style={{maxWidth: '65px',  minWidth: '65px'}} type="submit">
                                 Save
@@ -178,7 +188,7 @@ let sortByButton =
                     </div>
                     <div id="top5-workspace-textfield">
                         <Grid container spacing={1}>
-                            <Grid item className="list-name-corresponding-list" xs={3} md={6} mx={3} my = {1.5}>
+                            {/* <Grid item className="list-name-corresponding-list" xs={3} md={6} mx={3} my = {1.5}>
                                 <TextField
                                 name="list-name-textfield"
                                 id="list-name-textfield"
@@ -187,11 +197,12 @@ let sortByButton =
                                 defaultValue={store.currentList.name}
                                 inputProps={{style: {fontSize:26}}}
                                 />
-                            </Grid>
+                            </Grid> 
                             <Grid item xs={3} md={5}>
                             </Grid>
-                            <Grid item xs={3} md={1} mx={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>1.</Typography></div>
+                            */}
+                            <Grid item xs={3} md={1} mx={2}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53, borderRadius: 5, border: 1}}>1.</Typography></div>
                             </Grid>
                             <Grid item xs={3} md={10}>
                                 <div className="item-number-corresponding-item">
@@ -204,8 +215,8 @@ let sortByButton =
                                     inputProps={{style: {fontSize: 22}}}/>
                                 </div>
                             </Grid>
-                            <Grid item xs={3} md={1} mx={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>2.</Typography></div>
+                            <Grid item xs={3} md={1} mx={2} >
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53, borderRadius: 5, border: 1}}>2.</Typography></div>
                             </Grid>
                             <Grid item xs={3} md={10}>
                                 <div className="item-number-corresponding-item">
@@ -218,7 +229,7 @@ let sortByButton =
                                     inputProps={{style: {fontSize: 22}}}/>
                                 </div>
                             </Grid>
-                            <Grid item xs={3} md={1} mx={1}>
+                            <Grid item xs={3} md={1} mx={2}>
                                 <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>3.</Typography></div>
                             </Grid>
                             <Grid item xs={3} md={10}>
@@ -232,7 +243,7 @@ let sortByButton =
                                     inputProps={{style: {fontSize: 22}}}/>
                                 </div>
                             </Grid>
-                            <Grid item xs={3} md={1} mx={1}>
+                            <Grid item xs={3} md={1} mx={2}>
                                 <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>4.</Typography></div>
                             </Grid>
                             <Grid item xs={3} md={10}>
@@ -246,7 +257,7 @@ let sortByButton =
                                     inputProps={{style: {fontSize: 22}}}/>
                                 </div>
                             </Grid>
-                            <Grid item xs={3} md={1} mx={1}>
+                            <Grid item xs={3} md={1} mx={2}>
                                 <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>5.</Typography></div>
                             </Grid>
                             <Grid item xs={3} md={10}>
