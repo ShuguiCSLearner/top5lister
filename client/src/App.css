@@ -16,6 +16,10 @@
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 }
 
+test{
+  background-color: #fffff1;
+}
+
 body {
   background-color: var(--swatch-foundation);
 }
@@ -55,7 +59,7 @@ body {
 }
 #splash-screen {
   background-image: linear-gradient(to top, #076ee4, #f3e5e5);
-  color: white;
+  color: red;
   font-size: 5vw;
   border-color: black;
   border-width: 2px;
@@ -300,19 +304,31 @@ body {
   width: 100%;
   left: 20%;
   /* border: 1px 0px 1px 1px; */
-  border-color: black;
-  background-color: linen;
+  /* border-color: black; */
+  background-color: rgb(255, 193, 78);
   color: black;
   display: flex;
   align-items: center;
-  font-size: 48pt;
+  font-size: 40pt;
 }
+.list-name-corresponding-list{
+  justify-content: left;
+  width: 90%;
+  /* border: 1px 0px 1px 1px;
+  border: solid; */
+  background-color: rgb(216, 128, 40);
+  color: black;
+  display: flex;
+  align-items: left;
+  font-size: 40pt;
+}
+
 .item-number-corresponding-item {
   justify-content: center;
   width: 90%;
-  border: 1px 0px 1px 1px;
-  border: solid;
-  background-color: linen;
+  /* border: 1px 0px 1px 1px; */
+  /* border: solid; */
+  background-color: rgb(255, 193, 78);
   color: black;
   display: flex;
   align-items: left;

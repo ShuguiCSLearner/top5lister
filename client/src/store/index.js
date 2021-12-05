@@ -228,6 +228,7 @@ function GlobalStoreContextProvider(props) {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
             ownerEmail: auth.user.email,
+            ownerName: auth.user.firstName + " "+ auth.user.lastName,
             view: 0,
             like: 0,
             dislike: 0,
@@ -379,9 +380,12 @@ function GlobalStoreContextProvider(props) {
         store.currentList.items[3] = itemName4;
         store.currentList.items[4] = itemName5;
         store.currentList.hasPublished = true;
-        console.log(store.currentList.hasPublished);
         store.updateCurrentList();
         store.closeCurrentList();
+    }
+
+    store.incrementView = function (){
+        store.currentList.view = store.currentList.view + 1;
     }
 
     store.updateCurrentList = async function () {

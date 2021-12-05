@@ -28,6 +28,7 @@ function ListCard(props) {
     const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
+    const [hasExpand, setHasExpand] = useState(false);
     const { idNamePair } = props;
 
     function handleLoadList(event, id) {
@@ -36,23 +37,21 @@ function ListCard(props) {
             store.setCurrentList(id);
         }
     }
+    // function handleToggleEdit(event) {
+    //     event.stopPropagation();
+    //     toggleEdit();
+    // }
 
-    function handleToggleEdit(event) {
-        event.stopPropagation();
-        toggleEdit();
-    }
-
-    function toggleEdit() {
-        let newActive = !editActive;
-        if (newActive) {
-            store.setIsListNameEditActive();
-        }
-        else{
-            store.setIsListNameEditInactive();
-        }
-        setEditActive(newActive);
-    }
-
+    // function toggleEdit() {
+    //     let newActive = !editActive;
+    //     if (newActive) {
+    //         store.setIsListNameEditActive();
+    //     }
+    //     else{
+    //         store.setIsListNameEditInactive();
+    //     }
+    //     setEditActive(newActive);
+    // }
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
@@ -66,12 +65,11 @@ function ListCard(props) {
     //     }
     // }
     // function handleUpdateText(event) {
-    //     console.log(idNamePair);
     //     setText(event.target.value);
     // }
 
-    let likeNumber = <Typography variant="h5">l#</Typography>
-    let dislikeNumber = <Typography variant="h5">d#</Typography>
+    let likeNumber = <Typography variant="h5">{idNamePair.like}</Typography>
+    let dislikeNumber = <Typography variant="h5">{idNamePair.dislike}</Typography>
     let thumbUpButton = 
         <IconButton onClick={()=>{console.log("like")}} aria-label='like' //</Box>disabled={store.isListNameEditActive}
         >
@@ -92,36 +90,46 @@ function ListCard(props) {
             <DeleteIcon style={{fontSize:'24pt'}} />
         </IconButton>
     let authorText =  
-        <IconButton>
-            <Typography>By: Who</Typography>
-        </IconButton>
+        <div>
+            <Typography display="inline" sx={{my: 0, mx: 0}}>By:&nbsp;</Typography>
+            <Typography display="inline" sx={{color: 'blue', textDecorationLine: "underline"}}>{idNamePair.ownerName}</Typography>
+        </div>
     let viewText =
-        <IconButton>
-            <Typography>View: list.view</Typography>
-        </IconButton>
+        <div>
+            <Typography display="inline" sx={{my: 0, mx: 0}}>View:&nbsp;</Typography>
+            <Typography display="inline" sx={{color: '#b6424d'}}>{idNamePair.view}</Typography>
+        </div>
     let editButton = 
-        <IconButton onClick={(event) => {handleLoadList(event, idNamePair._id)}}>
-            <Typography>Edit</Typography>
-        </IconButton>
+        <div>
+            <Typography display="inline" sx={{my: 0, mx: 0, color:'red', cursor: "pointer", textDecorationLine: "underline"}} onClick={(event) => {handleLoadList(event, idNamePair._id)}}>Edit</Typography>
+            <Typography display="inline"></Typography>
+        </div>
+    if(idNamePair.hasPublished === true){
+        editButton = 
+        <div>
+            <Typography display="inline" sx={{my: 0, mx: 0}}>Published: </Typography>
+            <Typography display="inline" sx={{color: '#6db665'}}>{idNamePair.publishDate}</Typography>
+        </div>
+    }
     let expandButton = 
-        <IconButton onClick={(event)=> {console.log("Expand")}}>
+        <IconButton onClick={(event)=> {setHasExpand(true); }}>
             <ExpandMoreIcon/>
         </IconButton>
+    if(hasExpand){
+        expandButton = 
+        <IconButton onClick={(event)=> {setHasExpand(false); }}>
+            <ExpandLessIcon/>
+        </IconButton>
+    }
+    // This variable below control the color of the list card based on whether list has been publish or not 
+    let displayListCardColor = idNamePair.hasPublished ? '#d4d4f5' : '#fffff1'
 
-    let cardElement =
+    let cardElementCollapse =
         <ListItem
-            //disabled={store.isListNameEditActive}
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            // className='list-shape'
-            // button
-            style={{
-                fontSize: '10pt',
-                width: '100%',
-                background:'rgb(248, 253, 170)'
-            }}
-        >
+            sx={{ marginTop: '10px', display: 'flex', p: 1, borderRadius: 5, border: 1, borderColor: 'grey',fontSize: '10pt',width: '100%',
+            background:displayListCardColor}}>
                 {/* <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box> */}
                 <Grid container spacing={0}>
                     <Grid item xs={3} md={9}>
@@ -149,56 +157,51 @@ function ListCard(props) {
                         {expandButton}
                     </Grid>
                 </Grid>
-                {/* <Box sx={{ p: 0 }}>
-                    <IconButton onClick={handleToggleEdit} aria-label='like' //</Box>disabled={store.isListNameEditActive}
-                    >
-                        <ThumbUpIcon style={{fontSize:'24pt'}} />
-                    </IconButton>
-                </Box> */}
-                {/* <Box sx={{ p: 0 }}>
-                    <Typography variant="h5">{likeNumber}</Typography>
-                </Box> */}
-                {/* <Box sx={{ p: 1 }}>
-                    <Typography variant="h5"> &nbsp;&nbsp;&nbsp;</Typography>
-                </Box> */}
-                {/* <Box sx={{ p: 0 }}>
-                    <IconButton onClick={handleToggleEdit} aria-label='dislike' //</Box>disabled={store.isListNameEditActive}
-                    >
-                        <ThumbDownIcon style={{fontSize:'24pt'}} />
-                    </IconButton>
-                </Box> */}
-                {/* <Box sx={{ p: 0 }}>
-                    <Typography variant="h5">{dislikeNumber}</Typography>
-                </Box> */}
-                {/* <Box sx={{ p: 1 }}>
-                    <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete' //disabled={store.isListNameEditActive}
-                    >
-                        <DeleteIcon style={{fontSize:'24pt'}} />
-                    </IconButton>
-                </Box> */}
         </ListItem>
+    let cardElement = cardElementCollapse
+    if(hasExpand){
+        cardElement = 
+        <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={{ marginTop: '10px', display: 'flex', p: 1, borderRadius: 5, border: 1, borderColor: 'grey',fontSize: '10pt',width: '100%',
+            background:displayListCardColor}}>
+            <Grid container spacing={0}>
+                <Grid item xs={3} md={9}>
+                    <Typography variant="h4"> {idNamePair.name}</Typography>
+                </Grid>
+                <Grid item xs={3} md={1}>
+                    {thumbUpButton}
+                </Grid>
+                <Grid item xs={3} md={1}>
+                    {thumbDownButton}
+                </Grid>
+                <Grid item xs={3} md={1}>
+                    {deleteButton}
+                </Grid>
+                <Grid item xs={100} md={12}>
+                    {authorText}
+                </Grid>
+                <Grid item xs={100} md={6}>
+                    list item board area
+                </Grid>
+                <Grid item xs={3} md={6}>
+                    comment area
+                </Grid>
+                <Grid item xs={3} md={7}>
+                    {editButton}
+                </Grid>
+                <Grid item xs={3} md={4}>
+                    {viewText}
+                </Grid>
+                <Grid item xs={3} md={1}>
+                    {expandButton}
+                </Grid>
+            </Grid>
+        </ListItem>
+    }
 
-    // if (editActive) {
-    //     cardElement =
-    //         <TextField
-    //             margin="normal"
-    //             required
-    //             fullWidth
-    //             id={"list-" + idNamePair._id}
-    //             label="Top 5 List Name"
-    //             name="name"
-    //             autoComplete="Top 5 List Name"
-    //             className='list-card'
-    //             onKeyPress={handleKeyPress}
-    //             onChange={handleUpdateText}
-    //             defaultValue={idNamePair.name}
-    //             inputProps={{style: {fontSize: 48}}}
-    //             InputLabelProps={{style: {fontSize: 24}}}
-    //             autoFocus
-    //         />
-    // }
+
     return (
         cardElement
     );

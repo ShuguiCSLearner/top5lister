@@ -26,7 +26,7 @@ export default function ListDeletionModal(){
             onClose={!store.listMarkedForDeletion}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+            style={{display:'flex',alignItems:'center',justifyContent:'center', borderRadius: 5}}
         >
             <Typography align='center'>
                 <Box sx={style}>

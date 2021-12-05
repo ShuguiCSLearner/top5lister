@@ -16,6 +16,7 @@ import SortIcon from '@mui/icons-material/Sort';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
+import { bgcolor } from '@mui/system';
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -158,6 +159,112 @@ let sortByButton =
             }
         }
     }
+    let displayWorkSpace = "Loading"
+    if(store.currentList){
+        displayWorkSpace =
+            <div id="top5-workspace">
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <div id="top5-workspace-textfield-part2">
+                        <div id="save-button">
+                            <Button variant="outlined" style={{maxWidth: '65px',  minWidth: '65px'}} type="submit">
+                                Save
+                            </Button>
+                        </div>
+                        <div id="publish-button">
+                            <Button variant="outlined" style={{maxWidth: '65px',  minWidth: '65px'}} type="submit" onClick={toggleSave}>
+                                Publish
+                            </Button>
+                        </div>
+                    </div>
+                    <div id="top5-workspace-textfield">
+                        <Grid container spacing={1}>
+                            <Grid item className="list-name-corresponding-list" xs={3} md={6} mx={3} my = {1.5}>
+                                <TextField
+                                name="list-name-textfield"
+                                id="list-name-textfield"
+                                required
+                                fullWidth
+                                defaultValue={store.currentList.name}
+                                inputProps={{style: {fontSize:26}}}
+                                />
+                            </Grid>
+                            <Grid item xs={3} md={5}>
+                            </Grid>
+                            <Grid item xs={3} md={1} mx={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>1.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={10}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name1-textfield"
+                                    id="item-name1-textfield"
+                                    required
+                                    fullWidth
+                                    defaultValue={store.currentList.items[0]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1} mx={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>2.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={10}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name2-textfield"
+                                    id="item-name2-textfield"
+                                    required
+                                    fullWidth
+                                    defaultValue={store.currentList.items[1]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1} mx={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>3.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={10}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name3-textfield"
+                                    id="item-name3-textfield"
+                                    required
+                                    fullWidth
+                                    defaultValue={store.currentList.items[2]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1} mx={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 53}}>4.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={10}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name4-textfield"
+                                    id="item-name4-textfield"
+                                    required
+                                    fullWidth
+                                    defaultValue={store.currentList.items[3]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={3} md={1} mx={1}>
+                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>5.</Typography></div>
+                            </Grid>
+                            <Grid item xs={3} md={10}>
+                                <div className="item-number-corresponding-item">
+                                    <TextField 
+                                    name="item-name5-textfield"
+                                    id="item-name5-textfield"
+                                    required
+                                    fullWidth
+                                    defaultValue={store.currentList.items[4]} 
+                                    inputProps={{style: {fontSize: 22}}}/>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Box>
+            </div>
+    }
     return (
         <div id="top5-list-selector">
             <div id="list-selector-heading">
@@ -168,131 +275,8 @@ let sortByButton =
             {searchBar}
             {sortByText}
             {sortByButton}
-            
-            </div>
-            {/* <div id="top5-workspace">
-                <TextField className="workspace-list-name" defaultValue={store.currentList.name}/>
-                <div id="workspace-edit">
-                    <div id="edit-numbering">
-                        <div className="item-number"><Typography variant="h3">1.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">2.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">3.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">4.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">5.</Typography></div>
-                    </div>
-                    {editItems}
-                </div>
-                <div id="save-button">
-                    <Button>
-                        Save
-                    </Button>
-                </div>
-                <div id="publish-button">
-                    <Button>
-                        Publish
-                    </Button>
-                </div>
-            </div> */}
-            <div id="top5-workspace">
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                    <div id="top5-workspace-textfield-part2">
-                        <div id="save-button">
-                            <Button variant="outlined" style={{maxWidth: '75px',  minWidth: '75px'}} type="submit">
-                                Save
-                            </Button>
-                        </div>
-                        <div id="publish-button">
-                            <Button variant="outlined" style={{maxWidth: '75px',  minWidth: '75px'}} type="submit" onClick={toggleSave}>
-                                Publish
-                            </Button>
-                        </div>
-                    </div>
-                    <div id="top5-workspace-textfield">
-                        <Grid container spacing={1}>
-                            <Grid item xs={3} md={12}>
-                                <TextField
-                                name="list-name-textfield"
-                                id="list-name-textfield"
-                                required
-                                style={{width: 600}}
-                                defaultValue={store.currentList.name}
-                                inputProps={{style: {fontSize:26}}}
-                                />
-                            </Grid>
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>1.</Typography></div>
-                            </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
-                                    <TextField 
-                                    name="item-name1-textfield"
-                                    id="item-name1-textfield"
-                                    required
-                                    style={{width: 1200}} 
-                                    defaultValue={store.currentList.items[0]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
-                                </div>
-                            </Grid>
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>2.</Typography></div>
-                            </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
-                                    <TextField 
-                                    name="item-name2-textfield"
-                                    id="item-name2-textfield"
-                                    required
-                                    style={{width: 1200}} 
-                                    defaultValue={store.currentList.items[1]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
-                                </div>
-                            </Grid>
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>3.</Typography></div>
-                            </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
-                                    <TextField 
-                                    name="item-name3-textfield"
-                                    id="item-name3-textfield"
-                                    required
-                                    style={{width: 1200}} 
-                                    defaultValue={store.currentList.items[2]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
-                                </div>
-                            </Grid>
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>4.</Typography></div>
-                            </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
-                                    <TextField 
-                                    name="item-name4-textfield"
-                                    id="item-name4-textfield"
-                                    required
-                                    style={{width: 1200}} 
-                                    defaultValue={store.currentList.items[3]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
-                                </div>
-                            </Grid>
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>5.</Typography></div>
-                            </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
-                                    <TextField 
-                                    name="item-name5-textfield"
-                                    id="item-name5-textfield"
-                                    required
-                                    style={{width: 1200}} 
-                                    defaultValue={store.currentList.items[4]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
-                                </div>
-                            </Grid>
-                        </Grid>
-                    </div>
-                </Box>
-            </div>
+            </div> 
+            {displayWorkSpace}    
 
             <div id="top5-statusbar">
                 <IconButton 
