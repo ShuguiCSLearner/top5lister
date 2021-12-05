@@ -39,53 +39,55 @@ function ListCard(props) {
             store.setCurrentList(id);
         }
     }
-    function handleSubmit(event){
-        event.preventDefault();
-        alert('The name you entered was: ${name}');
-      }
-    
-    // function handleToggleEdit(event) {
-    //     event.stopPropagation();
-    //     toggleEdit();
-    // }
 
-    // function toggleEdit() {
-    //     let newActive = !editActive;
-    //     if (newActive) {
-    //         store.setIsListNameEditActive();
-    //     }
-    //     else{
-    //         store.setIsListNameEditInactive();
-    //     }
-    //     setEditActive(newActive);
-    // }
+    function handleLike(){
+        if(idNamePair.likeList.indexOf(auth.user.email) === -1 && idNamePair.dislikeList.indexOf(auth.user.email) === -1){
+            store.likeListAction(idNamePair._id);
+        }
+        else if(idNamePair.likeList.indexOf(auth.user.email) === -1 && idNamePair.dislikeList.indexOf(auth.user.email) !== -1){
+            store.likeAndUndislikeListAction(idNamePair._id);
+        }
+        else{
+            store.unlikeListAction(idNamePair._id);
+        }
+    }
+    function handleDislike(){
+        if(idNamePair.dislikeList.indexOf(auth.user.email) === -1 && idNamePair.likeList.indexOf(auth.user.email) === -1){
+            store.dislikeListAction(idNamePair._id);
+        }
+        else if(idNamePair.dislikeList.indexOf(auth.user.email) === -1 && idNamePair.likeList.indexOf(auth.user.email) !== -1){
+            store.dislikeAndUnlikeListAction(idNamePair._id);
+        }
+        else{
+            store.undislikeListAction(idNamePair._id);
+        }
+    }
+
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
     }
 
-    // function handleKeyPress(event) {
-    //     if (event.code === "Enter") {
-    //         let id = event.target.id.substring("list-".length);
-    //         store.changeListName(id, text);
-    //         toggleEdit();
-    //     }
-    // }
-    // function handleUpdateText(event) {
-    //     setText(event.target.value);
-    // }
+    let likeButtonColor = "black"
+    if(idNamePair.likeList.indexOf(auth.user.email) !== -1){
+        likeButtonColor = "red"
+    }
+    let dislikeButtonColor = "black"
+    if(idNamePair.dislikeList.indexOf(auth.user.email) !== -1){
+        dislikeButtonColor = "red"
+    }
 
     let likeNumber = <Typography variant="h5">{idNamePair.like}</Typography>
     let dislikeNumber = <Typography variant="h5">{idNamePair.dislike}</Typography>
     let thumbUpButton = 
-        <IconButton onClick={()=>{console.log("like")}} aria-label='like' //</Box>disabled={store.isListNameEditActive}
+        <IconButton onClick={handleLike} aria-label='like' //</Box>disabled={store.isListNameEditActive}
         >
-            <ThumbUpIcon style={{fontSize:'24pt'}} />
+            <ThumbUpIcon style={{fontSize:'24pt', color: likeButtonColor}} />
         </IconButton>
     let thumbDownButton = 
-        <IconButton onClick={()=>{console.log("dislike")}} aria-label='dislike' //</Box>disabled={store.isListNameEditActive}
+        <IconButton onClick={handleDislike} aria-label='dislike' //</Box>disabled={store.isListNameEditActive}
         >
-            <ThumbDownIcon style={{fontSize:'24pt'}} />
+            <ThumbDownIcon style={{fontSize:'24pt', color: dislikeButtonColor}} />
         </IconButton>
     let deleteButton = 
         <IconButton onClick={(event) => {
@@ -152,6 +154,7 @@ function ListCard(props) {
                     required
                     fullWidth
                     inputProps={{style: {fontSize:12}}}
+                    onKeyPress={(e)=>{if(e.key === "Enter" && e.target.value != ""){store.sendComment(idNamePair._id, auth.user.firstName + " " + auth.user.lastName + "-!-" + e.target.value); e.target.value = ""}}}
                 />
             </div>
         </div>
@@ -168,6 +171,7 @@ function ListCard(props) {
         setHasExpand(true);
         if(idNamePair.hasPublished){
             store.incrementView(idNamePair._id);
+            console.log("auth", auth)
         }
     }
 

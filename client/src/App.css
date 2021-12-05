@@ -375,7 +375,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #d4d4f5;
-  align-items: center;
+  align-items: left;
   overflow: scroll;
 }
 .comment-list-comment{

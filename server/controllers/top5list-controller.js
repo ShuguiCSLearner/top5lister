@@ -1,3 +1,4 @@
+const top5listModel = require('../models/top5list-model');
 const Top5List = require('../models/top5list-model');
 const User = require('../models/user-model');
 
@@ -63,6 +64,11 @@ updateTop5List = async (req, res) => {
         top5List.items = body.items
         top5List.hasPublished = body.hasPublished
         top5List.view = body.view
+        top5List.like = body.like
+        top5List.likeList = body.likeList
+        top5List.dislike = body.dislike
+        top5List.dislikeList = body.dislikeList
+        top5List.comments = body.comments
         top5List
             .save()
             .then(() => {
@@ -163,7 +169,9 @@ getTop5ListPairs = async (req, res) => {
                     ownerName: list.ownerName,
                     view: list.view,
                     like: list.like,
+                    likeList: list.likeList,
                     dislike: list.dislike,
+                    dislikeList: list.dislikeList,
                     comments: list.comments,
                     hasPublished: list.hasPublished,
                     publishDate: list.publishDate,
