@@ -4,9 +4,9 @@ import AuthContext from '../auth'
 import ListCard from './ListCard.js'
 import { Button, Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
-import HomeIcon from '@mui/icons-material/Home';
-import GroupsIcon from '@mui/icons-material/Groups';
-import PersonIcon from '@mui/icons-material/Person';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import TextField from '@mui/material/TextField';
@@ -17,6 +17,7 @@ import Menu from '@mui/material/Menu';
 
 import List from '@mui/material/List';
 import ListDeletionModal from './ListDeletionModal';
+import { borderColor } from '@mui/system'
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -108,10 +109,10 @@ const HomeScreen = () => {
         <Typography variant="h2">Your Lists</Typography>
         </div>
 
-    let homeButtonColor = auth.pageNumber === 1 ? "green" : "black"
-    let groupsButtonColor = auth.pageNumber === 2 ? "green" : "black"
-    let personButtonColor = auth.pageNumber === 3 ? "green" : "black"
-    let sigmaButtonColor = auth.pageNumber === 4 ? "green" : "black"
+    let homeButtonColor = auth.pageNumber === 1 ? "green" : "#e6e6e6"
+    let groupsButtonColor = auth.pageNumber === 2 ? "green" : "#e6e6e6"
+    let personButtonColor = auth.pageNumber === 3 ? "green" : "#e6e6e6"
+    let sigmaButtonColor = auth.pageNumber === 4 ? "green" : "#e6e6e6"
     let homeButton = 
         <div id="top5-homebutton">
         <Button 
@@ -121,7 +122,7 @@ const HomeScreen = () => {
             size="large"
             onClick={handleHomeScreenLoading}
         >
-            <HomeIcon style={{ fontSize: 50 ,color:homeButtonColor}}/>
+            <HomeOutlinedIcon style={{ fontSize: 50 ,color: "black", borderStyle: "solid", borderColor: homeButtonColor}}/>
         </Button>
         </div>
 
@@ -134,7 +135,7 @@ const HomeScreen = () => {
             size="large"
             onClick={handleAllUserScreenLoading}
         >
-            <GroupsIcon style={{ fontSize: 50 ,color:groupsButtonColor}}/>
+            <GroupsOutlinedIcon style={{ fontSize: 50 ,color: "black", borderStyle: "solid", borderColor: groupsButtonColor}}/>
         </Button>
         </div>
 
@@ -147,7 +148,7 @@ const HomeScreen = () => {
             size="large"
             onClick={handleOneUserScreenLoading}
         >
-            <PersonIcon style={{ fontSize: 50 ,color:personButtonColor}}/>
+            <PersonOutlineOutlinedIcon style={{ fontSize: 50 ,color: "black", borderStyle: "solid", borderColor: personButtonColor}}/>
         </Button>
         </div>
 
@@ -160,7 +161,7 @@ const HomeScreen = () => {
             size="large"
             onClick={handleCommunityScreenLoading}
         >
-            <FunctionsIcon style={{ fontSize: 50 ,color:sigmaButtonColor}}/>
+            <FunctionsIcon style={{ fontSize: 50 ,color: "black", borderStyle: "solid", borderColor: sigmaButtonColor}}/>
         </Button>
         </div>
 

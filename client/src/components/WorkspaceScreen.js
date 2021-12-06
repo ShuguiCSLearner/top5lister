@@ -6,9 +6,9 @@ import { GlobalStoreContext } from '../store/index.js'
 
 
 import AddIcon from '@mui/icons-material/Add';
-import HomeIcon from '@mui/icons-material/Home';
-import GroupsIcon from '@mui/icons-material/Groups';
-import PersonIcon from '@mui/icons-material/Person';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import TextField from '@mui/material/TextField';
@@ -60,7 +60,7 @@ function WorkspaceScreen() {
         size="large"
         disabled={true}
     >
-        <HomeIcon style={{ fontSize: 50 ,color:'grey'}}/>
+        <HomeOutlinedIcon style={{ fontSize: 50 ,color:'grey', borderColor: "green", borderStyle: "solid"}}/>
     </Button>
     </div>
 
@@ -73,7 +73,7 @@ let groupsButton =
         size="large"
         disabled={true}
     >
-        <GroupsIcon style={{ fontSize: 50 ,color:'grey'}}/>
+        <GroupsOutlinedIcon style={{ fontSize: 50 ,color:'grey'}}/>
     </Button>
     </div>
 
@@ -86,7 +86,7 @@ let personButton =
         size="large"
         disabled={true}
     >
-        <PersonIcon style={{ fontSize: 50 ,color:'grey'}}/>
+        <PersonOutlineOutlinedIcon style={{ fontSize: 50 ,color:'grey'}}/>
     </Button>
     </div>
 

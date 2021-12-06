@@ -139,8 +139,6 @@ function ListCard(props) {
             <div className = 'item-list-board-item'>4. {idNamePair.items[3]}</div>
             <div className = 'item-list-board-item'>5. {idNamePair.items[4]}</div>
         </div>
-        //     </Grid>
-        // </Grid>
     
     let commentBoard =
         <div id = "commentBoard">
