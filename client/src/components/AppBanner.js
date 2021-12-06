@@ -83,7 +83,7 @@ export default function AppBanner() {
     
     function getAccountMenu(loggedIn) {         
         if(loggedIn){
-            return auth.user.firstName.charAt(0).toUpperCase()+auth.user.lastName.charAt(0).toUpperCase()
+            return <Typography xs={{color:'black'}}>{auth.user.firstName.charAt(0).toUpperCase()}{auth.user.lastName.charAt(0).toUpperCase()}</Typography>
         }
         else{
             return <AccountCircle />;
@@ -111,7 +111,7 @@ export default function AppBanner() {
                             aria-controls={menuId}
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
-                            color="inherit"
+                            style = {{bgcolor: 'purple', color: 'black'}}
                         >
                             { getAccountMenu(auth.loggedIn) }
                         </IconButton>

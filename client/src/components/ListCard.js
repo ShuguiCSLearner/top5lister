@@ -172,7 +172,7 @@ function ListCard(props) {
         setHasExpand(true);
         if(idNamePair.hasPublished){
             store.incrementView(idNamePair._id);
-            console.log("auth", auth)
+            console.log("store.page: ", store.pageNumber);
         }
     }
 

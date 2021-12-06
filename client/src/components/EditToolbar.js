@@ -14,9 +14,6 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
 
-    function handleClose() {
-        store.closeCurrentList();
-    }
     let editStatus = false;
     if (store.isListNameEditActive) {
         editStatus = true;

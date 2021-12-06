@@ -16,10 +16,8 @@ export const AuthActionType = {
     ERROR_MODAL: "ERROR_MODAL", 
     ERROR_MODAL_DISAPPEAR: "ERROR_MODAL_DISAPPEAR", 
     LOGOUT_USER: "LOGOUT_USER",
-    CHANGE_TO_HOME_SCREEN: "CHANGE_TO_HOME_SCREEN",
-    CHANGE_TO_ALL_USER_SCREEN: "CHANGE_TO_ALL_USER_SCREEN",
-    CHANGE_TO_ONE_USER_SCREEN: "CHANGE_TO_ONE_USER_SCREEN",
-    CHANGE_TO_COMMUNITY_SCREEN: "CHANGE_TO_COMMUNITY_SCREEN",
+    CHANGE_SCREEN: "CHANGE_SCREEN",
+    UPDATE_SCREEN: "UPDATE_SCREEN",
     CHANGE_NEW_DATE_FILTER: "CHANGE_NEW_DATE_FILTER",
     CHANGE_OLD_DATE_FILTER: "CHANGE_OLD_DATE_FILTER",
     CHANGE_VIEW_FILTER: "CHANGE_VIEW_FILTER",
@@ -52,7 +50,7 @@ function AuthContextProvider(props) {
                     loggedIn: payload.loggedIn,
                     error: false,
                     msg: null,
-                    pageNumber: auth.pageNumber
+                    pageNumber: 1
                 });
             }
             case AuthActionType.REGISTER_USER: {
@@ -61,7 +59,7 @@ function AuthContextProvider(props) {
                     loggedIn: true,
                     error: false,
                     msg: null,
-                    pageNumber: 1
+                    pageNumber: 0
                 })
             }
             case AuthActionType.LOGIN_USER: { 
@@ -99,40 +97,22 @@ function AuthContextProvider(props) {
                     pageNumber: 0
                 })
             }
-            case AuthActionType.CHANGE_TO_HOME_SCREEN:{
+            case AuthActionType.CHANGE_SCREEN:{
                 return setAuth({
                     user: auth.user,
                     loggedIn: auth.loggedIn,
                     error: auth.error,
                     msg: auth.msg,
-                    pageNumber: 1
+                    pageNumber: payload.pageNumber
                 })
             }
-            case AuthActionType.CHANGE_TO_ALL_USER_SCREEN:{
+            case AuthActionType.UPDATE_SCREEN:{
                 return setAuth({
                     user: auth.user,
                     loggedIn: auth.loggedIn,
                     error: auth.error,
                     msg: auth.msg,
-                    pageNumber: 2
-                })
-            }
-            case AuthActionType.CHANGE_TO_ONE_USER_SCREEN:{
-                return setAuth({
-                    user: auth.user,
-                    loggedIn: auth.loggedIn,
-                    error: auth.error,
-                    msg: auth.msg,
-                    pageNumber: 3
-                })
-            }
-            case AuthActionType.CHANGE_TO_COMMUNITY_SCREEN:{
-                return setAuth({
-                    user: auth.user,
-                    loggedIn: auth.loggedIn,
-                    error: auth.error,
-                    msg: auth.msg,
-                    pageNumber: 4
+                    pageNumber: auth.pageNumber
                 })
             }
             default:
@@ -175,7 +155,6 @@ function AuthContextProvider(props) {
                     }
                 });
                 history.push("/");
-                store.closeCurrentList();
             }
         }catch(err){
             console.log(err);
@@ -217,8 +196,7 @@ function AuthContextProvider(props) {
                         user: response.data.user
                     }
                 })
-                history.push("/");
-                store.loadIdNamePairs();
+                history.push("/login/");
             }
         }
         catch (err){
@@ -231,41 +209,11 @@ function AuthContextProvider(props) {
             });
         }
     }
-    auth.loadingHomeScreen = function (store){
+    auth.loadingScreen = function (pageNumber, store){
         authReducer({
-            type: AuthActionType.CHANGE_TO_HOME_SCREEN,
+            type: AuthActionType.CHANGE_SCREEN,
             payload: {
-                pageNumber: 1
-            }
-        })
-        history.push("/");
-        store.loadIdNamePairs();
-    }
-    auth.loadingAllUserScreen = function (store){
-        authReducer({
-            type: AuthActionType.CHANGE_TO_ALL_USER_SCREEN,
-            payload: {
-                pageNumber: 2
-            }
-        })
-        history.push("/");
-        store.loadIdNamePairs();
-    }
-    auth.loadingOneUserScreen = function (store){
-        authReducer({
-            type: AuthActionType.CHANGE_TO_ONE_USER_SCREEN,
-            payload: {
-                pageNumber: 3
-            }
-        })
-        history.push("/");
-        store.loadIdNamePairs();
-    }
-    auth.loadingCommunityListScreen = function (store){
-        authReducer({
-            type: AuthActionType.CHANGE_TO_COMMUNITY_SCREEN,
-            payload: {
-                pageNumber: 4
+                pageNumber: pageNumber
             }
         })
         history.push("/");

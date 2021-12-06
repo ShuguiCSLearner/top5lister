@@ -25,7 +25,12 @@ export const GlobalStoreActionType = {
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
     SET_ITEM_EDIT_INACTIVE: "SET_ITEM_EDIT_INACTIVE",
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
-    SET_LIST_NAME_EDIT_INACTIVE: "SET_LIST_NAME_EDIT_INACTIVE"
+    SET_LIST_NAME_EDIT_INACTIVE: "SET_LIST_NAME_EDIT_INACTIVE",
+    CHANGE_ALLUSER_SCREEN: "CHANGE_ALLUSER_SCREEN",
+    CHANGE_ONEUSER_SCREEN: "CHANGE_ONEUSER_SCREEN",
+    CHANGE_COMMUNITYLIST_SCREEN: "CHANGE_COMMUNITYLIST_SCREEN",
+    CHANGE_FILTER_TYPE: "CHANGE_FILTER_TYPE",
+    SEARCH_TEXT: "SEARCH_TEXT"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -40,7 +45,10 @@ function GlobalStoreContextProvider(props) {
         newListCounter: 0,
         listNameActive: false,
         itemActive: false,
-        listMarkedForDeletion: null
+        listMarkedForDeletion: null,
+        pageNumber: 0,                 // 1: home , 2: allList, 3: user, 4: community
+        filter: 1,                     // 1: New Date, 2: Old Date, 3: View, 4: Most Like, 5: Most Dislike
+        text: ""
     });
     const history = useHistory();
 
@@ -60,7 +68,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: 1,
+                    text: store.text
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -71,7 +82,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 })
             }
             // CREATE A NEW LIST
@@ -82,7 +96,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter + 1,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -93,7 +110,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -104,7 +124,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: payload
+                    listMarkedForDeletion: payload,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -115,7 +138,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // UPDATE A LIST
@@ -126,7 +152,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // START EDITING A LIST ITEM
@@ -137,7 +166,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: true,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // END EDITING A LIST ITEM
@@ -148,7 +180,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }                                                       
             // START EDITING A LIST NAME
@@ -159,7 +194,10 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
             }
             // END EDITING A LIST NAME
@@ -170,11 +208,119 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    pageNumber: 1,
+                    filter: store.filter,
+                    text: store.text
                 });
+            }
+            case GlobalStoreActionType.CHANGE_ALLUSER_SCREEN: {   // my list proof design
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    pageNumber: 2,
+                    filter: store.filter,
+                    text: store.text
+                });
+            }
+            case GlobalStoreActionType.CHANGE_ONEUSER_SCREEN: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    pageNumber: 3,
+                    filter: store.filter,
+                    text: store.text
+                });
+            }
+            case GlobalStoreActionType.CHANGE_FILTER_TYPE: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    pageNumber: store.pageNumber,
+                    filter: payload,
+                    text: store.text
+                })
+            }
+            case GlobalStoreActionType.SEARCH_TEXT: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    pageNumber: store.pageNumber,
+                    filter: store.filter,
+                    text: payload
+                })
             }
             default:
                 return store;
+        }
+    }
+    // store.loadIdNamePairs = async function () { // = {pageNumber: 1}
+    //     console.log(store.pageNumber);
+    //     const response = await api.getTop5ListPairs();
+    //     if (response.data.success) {
+    //         let pairsArray = response.data.idNamePairs;
+    //         storeReducer({
+    //             type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+    //             payload: pairsArray
+    //         });
+    //     }
+    //     else {
+    //         console.log("API FAILED TO GET THE LIST PAIRS");
+    //     }
+    // }
+    store.changeFilter = function(input){
+        storeReducer({
+            type: GlobalStoreActionType.CHANGE_FILTER_TYPE,
+            payload: input
+        })
+    }
+    store.enterSearchText = function(input){
+        storeReducer({
+            type: GlobalStoreActionType.SEARCH_TEXT,
+            payload: input
+        })
+    }
+
+    store.loadAllIdNamePairs = async function (){
+        const response = await api.getAllTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            storeReducer({
+                type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                payload: pairsArray
+            });
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
+    }
+    store.loadOneIdNamePairs = async function (){
+        const response = await api.getAllTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            storeReducer({
+                type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                payload: pairsArray
+            });
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
 
@@ -210,6 +356,9 @@ function GlobalStoreContextProvider(props) {
             updateList(top5List);
         }
     }
+    store.searchText = function (){
+        console.log("undone");
+    }
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
@@ -231,20 +380,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -262,20 +436,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -292,20 +491,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -323,20 +547,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -359,20 +608,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -394,20 +668,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -423,20 +722,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -478,7 +802,7 @@ function GlobalStoreContextProvider(props) {
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
-    store.loadIdNamePairs = async function () {
+    store.loadIdNamePairs = async function () { // = {pageNumber: 1}
         const response = await api.getTop5ListPairs();
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
@@ -578,31 +902,130 @@ function GlobalStoreContextProvider(props) {
         store.updateCurrentList();
     }
 
-    store.saveList = function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
-        store.currentList.name = listName;
-        store.currentList.items[0] = itemName1;
-        store.currentList.items[1] = itemName2;
-        store.currentList.items[2] = itemName3;
-        store.currentList.items[3] = itemName4;
-        store.currentList.items[4] = itemName5;
-        store.updateCurrentList();
+    store.saveList = async function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
+        let response = await api.getTop5ListById(store.currentList._id);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            top5List.name = listName;
+            top5List.items[0] = itemName1;
+            top5List.items[1] = itemName2;
+            top5List.items[2] = itemName3;
+            top5List.items[3] = itemName4;
+            top5List.items[4] = itemName5;
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                }
+            }
+            updateList(top5List);
+        }
         store.closeCurrentList();
     }
     
-    store.publishList = function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
-        store.currentList.name = listName;
-        store.currentList.items[0] = itemName1;
-        store.currentList.items[1] = itemName2;
-        store.currentList.items[2] = itemName3;
-        store.currentList.items[3] = itemName4;
-        store.currentList.items[4] = itemName5;
-        store.currentList.hasPublished = true;
-        let publishing = new Date();
-        store.currentList.publishDate = publishing;
-        store.currentList.publishDateFormat = publishing.toLocaleString('default', {month:'short'}) + " " + publishing.getDate() + ", " + publishing.getFullYear();
-        store.updateCurrentList();
+    store.publishList = async function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
+        let response = await api.getTop5ListById(store.currentList._id);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            top5List.name = listName;
+            top5List.items[0] = itemName1;
+            top5List.items[1] = itemName2;
+            top5List.items[2] = itemName3;
+            top5List.items[3] = itemName4;
+            top5List.items[4] = itemName5;
+            top5List.hasPublished = true;
+            let publishing = new Date();
+            top5List.publishDate = publishing;
+            top5List.publishDateFormat = publishing.toLocaleString('default', {month:'short'}) + " " + publishing.getDate() + ", " + publishing.getFullYear();
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                }
+            }
+            updateList(top5List);
+        }
         store.closeCurrentList();
     }
+// let publishing = new Date();
+            // top5List.publishDate = publishing;
+            // top5List.publishDateFormat = publishing.toLocaleString('default', {month:'short'}) + " " + publishing.getDate() + ", " + publishing.getFullYear();
     // Increment the view of the list by 1
     store.incrementView = async function (id){
         let response = await api.getTop5ListById(id);
@@ -612,20 +1035,45 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
-                                }
-                            });
+                    if(store.pageNumber === 1){
+                        async function getListPairs(top5List) {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                                    payload: pairsArray
+                                });
+                            }
                         }
+                        getListPairs(top5List);
                     }
-                    getListPairs(top5List);
+                    else if(store.pageNumber === 2){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 3){
+                        async function getAllListPairs(top5List){
+                            response = await api.getAllTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -671,15 +1119,6 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
-
-    // //Test for delete
-    // store.test = async function () {
-    //     let response = await api.deleteTop5ListById("618961d81c03123d046a0344");
-    //     if (response.data.success) {
-    //         store.loadIdNamePairs();
-    //         history.push("/");
-    //     }
-    // }
 
     return (
         <GlobalStoreContext.Provider value={{
