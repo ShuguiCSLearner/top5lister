@@ -70,6 +70,7 @@ updateTop5List = async (req, res) => {
         top5List.dislikeList = body.dislikeList
         top5List.comments = body.comments
         top5List.publishDateFormat = body.publishDateFormat
+        top5List.isCommunity = body.isCommunity
         top5List
             .save()
             .then(() => {
@@ -175,6 +176,7 @@ getTop5ListPairs = async (req, res) => {
                     dislikeList: list.dislikeList,
                     comments: list.comments,
                     hasPublished: list.hasPublished,
+                    isCommunity: list.isCommunity,
                     publishDate: list.publishDate,
                     publishDateFormat: list.publishDateFormat
                 };
@@ -186,7 +188,7 @@ getTop5ListPairs = async (req, res) => {
 }
 getTop5AllListPairs  = async (req, res) => {
     const loggedInUser = await User.findOne({ _id: req.userId });
-    await Top5List.find({hasPublished: true}, (err, top5Lists) => {
+    await Top5List.find({hasPublished: true, isCommunity: false}, (err, top5Lists) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -214,6 +216,48 @@ getTop5AllListPairs  = async (req, res) => {
                     dislikeList: list.dislikeList,
                     comments: list.comments,
                     hasPublished: list.hasPublished,
+                    isCommunity: list.isCommunity,
+                    publishDate: list.publishDate,
+                    publishDateFormat: list.publishDateFormat
+                };
+                pairs.push(pair);
+            }
+            return res.status(200).json({ success: true, idNamePairs: pairs })
+        }
+    }).catch(err => console.log(err))
+}
+
+getTop5CommunityListPairs  = async (req, res) => {
+    const loggedInUser = await User.findOne({ _id: req.userId });
+    await Top5List.find({hasPublished: true, isCommunity: true}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!top5Lists) {
+            console.log("!top5Lists.length");
+            return res
+                .status(404)
+                .json({ success: false, error: 'Top 5 Lists not found' })
+        }
+        else {
+            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+            let pairs = [];
+            for (let key in top5Lists) {
+                let list = top5Lists[key];
+                let pair = {
+                    _id: list._id,
+                    name: list.name,
+                    items: list.items,
+                    ownerEmail: list.ownerEmail,
+                    ownerName: list.ownerName,
+                    view: list.view,
+                    like: list.like,
+                    likeList: list.likeList,
+                    dislike: list.dislike,
+                    dislikeList: list.dislikeList,
+                    comments: list.comments,
+                    hasPublished: list.hasPublished,
+                    isCommunity: list.isCommunity,
                     publishDate: list.publishDate,
                     publishDateFormat: list.publishDateFormat
                 };
@@ -231,5 +275,6 @@ module.exports = {
     getTop5Lists,
     getTop5ListPairs,
     getTop5ListById,
-    getTop5AllListPairs
+    getTop5AllListPairs,
+    getTop5CommunityListPairs //community list pairs
 }

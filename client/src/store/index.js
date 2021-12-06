@@ -240,6 +240,19 @@ function GlobalStoreContextProvider(props) {
                     text: store.text
                 });
             }
+            case GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    pageNumber: 4,
+                    filter: store.filter,
+                    text: store.text
+                });
+            }
             case GlobalStoreActionType.CHANGE_FILTER_TYPE: {
                 return setStore({
                     idNamePairs: store.idNamePairs,
@@ -316,6 +329,19 @@ function GlobalStoreContextProvider(props) {
             let pairsArray = response.data.idNamePairs;
             storeReducer({
                 type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                payload: pairsArray
+            });
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
+    }
+    store.loadCommunityIdNamePairs = async function (){
+        const response = await api.getTop5CommunityListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            storeReducer({
+                type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
                 payload: pairsArray
             });
         }
@@ -419,6 +445,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -469,6 +508,19 @@ function GlobalStoreContextProvider(props) {
                                 let pairsArray = response.data.idNamePairs;
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
                                     payload: pairsArray
                                 });
                             }
@@ -530,6 +582,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -580,6 +645,19 @@ function GlobalStoreContextProvider(props) {
                                 let pairsArray = response.data.idNamePairs;
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
                                     payload: pairsArray
                                 });
                             }
@@ -647,6 +725,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -707,6 +798,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -761,6 +865,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -781,6 +898,7 @@ function GlobalStoreContextProvider(props) {
             dislike: 0,
             dislikeList: [],
             comments: [],
+            isCommunity: false,
             hasPublished: false,
             publishDate: new Date()
         };
@@ -954,6 +1072,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -1017,6 +1148,19 @@ function GlobalStoreContextProvider(props) {
                         }
                         getAllListPairs(top5List);
                     }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
                 }
             }
             updateList(top5List);
@@ -1068,6 +1212,19 @@ function GlobalStoreContextProvider(props) {
                                 let pairsArray = response.data.idNamePairs;
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
+                                    payload: pairsArray
+                                });
+                            }
+                        }
+                        getAllListPairs(top5List);
+                    }
+                    else if(store.pageNumber === 4){
+                        async function getAllListPairs(top5List){
+                            response = await api.getTop5CommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
                                     payload: pairsArray
                                 });
                             }

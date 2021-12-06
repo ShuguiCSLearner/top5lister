@@ -29,6 +29,7 @@ export const updateTop5ListById = (id, payload) => api.put(`/top5list/${id}`, pa
 export const deleteTop5ListById = (id) => api.delete(`/top5list/${id}`)
 export const getTop5ListById = (id) => api.get(`/top5list/${id}`)
 export const getAllTop5ListPairs = () => api.get(`/alltop5listpairs/`)
+export const getTop5CommunityListPairs = () => api.get(`/communitytop5listpairs/`)
 
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const registerUser = (payload) => api.post(`/register/`, payload)
@@ -43,6 +44,7 @@ const apis = {
     deleteTop5ListById,
     getTop5ListById,
     getAllTop5ListPairs,
+    getTop5CommunityListPairs,
 
     getLoggedIn,
     registerUser,

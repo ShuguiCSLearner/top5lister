@@ -106,7 +106,7 @@ const HomeScreen = () => {
     }
     function handleCommunityScreenLoading(){
         auth.loadingScreen(4, store);
-        store.loadIdNamePairs();
+        store.loadCommunityIdNamePairs();
     }
     let listCard = "";
     if(store.filter === 1){ // New
@@ -207,18 +207,35 @@ const HomeScreen = () => {
             }
         }
         else if(store.pageNumber === 4){
-            listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
+            if(store.text === ""){
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        store.idNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
             }
-            </List>;
+            else{
+                let startWithidNamePairs = store.idNamePairs.filter(e => e.name.toLowerCase().startsWith(store.text.toLowerCase()));
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        startWithidNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+            }
         }
     }
     if(store.filter === 2){ // Old
@@ -318,18 +335,35 @@ const HomeScreen = () => {
             }
         }
         else if(store.pageNumber === 4){
-            listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
+            if(store.text === ""){
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        store.idNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
             }
-            </List>;
+            else{
+                let startWithidNamePairs = store.idNamePairs.filter(e => e.name.toLowerCase().startsWith(store.text.toLowerCase()));
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        startWithidNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+            }
         }
     }
     if(store.filter === 3){ // Most View
@@ -429,18 +463,35 @@ const HomeScreen = () => {
             }
         }
         else if(store.pageNumber === 4){
-            listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
+            if(store.text === ""){
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        store.idNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
             }
-            </List>;
+            else{
+                let startWithidNamePairs = store.idNamePairs.filter(e => e.name.toLowerCase().startsWith(store.text.toLowerCase()));
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        startWithidNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+            }
         }
     }
     if(store.filter === 4){ // Most Like
@@ -540,18 +591,35 @@ const HomeScreen = () => {
             }
         }
         else if(store.pageNumber === 4){
-            listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
+            if(store.text === ""){
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        store.idNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
             }
-            </List>;
+            else{
+                let startWithidNamePairs = store.idNamePairs.filter(e => e.name.toLowerCase().startsWith(store.text.toLowerCase()));
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        startWithidNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+            }
         }
     }
     if(store.filter === 5){ // Most Dislike
@@ -651,18 +719,35 @@ const HomeScreen = () => {
             }
         }
         else if(store.pageNumber === 4){
-            listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
+            if(store.text === ""){
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        store.idNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
             }
-            </List>;
+            else{
+                let startWithidNamePairs = store.idNamePairs.filter(e => e.name.toLowerCase().startsWith(store.text.toLowerCase()));
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        startWithidNamePairs.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+            }
         }
     }
     // if (store) {
