@@ -418,7 +418,7 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let top5List = response.data.top5List;
             let newCommentList = top5List.comments;
-            newCommentList.push(comment);
+            newCommentList.unshift(comment);
             top5List.comments = newCommentList;
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
@@ -601,7 +601,9 @@ function GlobalStoreContextProvider(props) {
         store.currentList.items[3] = itemName4;
         store.currentList.items[4] = itemName5;
         store.currentList.hasPublished = true;
-        store.currentList.publishDate = new Date();
+        let publishing = new Date();
+        store.currentList.publishDate = publishing;
+        store.currentList.publishDateFormat = publishing.toLocaleString('default', {month:'short'}) + " " + publishing.getDate() + ", " + publishing.getFullYear();
         store.updateCurrentList();
         store.closeCurrentList();
     }

@@ -94,8 +94,11 @@ function ListCard(props) {
             handleDeleteList(event, idNamePair._id)
         }} aria-label='delete' //disabled={store.isListNameEditActive}
         >
-            <DeleteIcon style={{fontSize:'24pt'}} />
+            <DeleteIcon style={{fontSize:'24pt', color: 'black'}} />
         </IconButton>
+    if(auth.pageNumber != 1){
+        deleteButton = ""
+    }
     let authorText =  
         <div>
             <Typography display="inline" sx={{my: 0, mx: 0}}>By:&nbsp;</Typography>
@@ -115,13 +118,19 @@ function ListCard(props) {
         editButton = 
         <div>
             <Typography display="inline" sx={{my: 0, mx: 0}}>Published: </Typography>
-            <Typography display="inline" sx={{color: '#6db665'}}>{idNamePair.publishDate}</Typography>
+            <Typography display="inline" sx={{color: '#6db665'}}>{idNamePair.publishDateFormat}</Typography>
         </div>
     }
     let expandButton = 
         <IconButton onClick={handleExpandMore}>
-            <ExpandMoreIcon/>
+            <ExpandMoreIcon style={{color: "black"}}/>
         </IconButton>
+    if(hasExpand){
+        expandButton = 
+        <IconButton onClick={(event)=> {setHasExpand(false); }}>
+            <ExpandLessIcon style={{color: "black"}}/>
+        </IconButton>
+    }
     let itemListBoard =
         <div id="itemListBoard">
             <div className = 'item-list-board-item'>1. {idNamePair.items[0]}</div>
@@ -158,12 +167,6 @@ function ListCard(props) {
                 />
             </div>
         </div>
-    if(hasExpand){
-        expandButton = 
-        <IconButton onClick={(event)=> {setHasExpand(false); }}>
-            <ExpandLessIcon/>
-        </IconButton>
-    }
     // This variable below control the color of the list card based on whether list has been publish or not 
     let displayListCardColor = idNamePair.hasPublished ? '#d4d4f5' : '#fffff1'
     //increment view + 1

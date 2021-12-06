@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import AuthContext from '../auth'
 import ListCard from './ListCard.js'
 import { Button, Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
@@ -25,6 +26,7 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
+    const { auth } = useContext(AuthContext);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -65,6 +67,18 @@ const HomeScreen = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
+    function handleHomeScreenLoading(){
+        auth.loadingHomeScreen(store);
+    }
+    function handleAllUserScreenLoading(){
+        auth.loadingAllUserScreen(store);
+    }
+    function handleOneUserScreenLoading(){
+        auth.loadingOneUserScreen(store);
+    }
+    function handleCommunityScreenLoading(){
+        auth.loadingCommunityListScreen(store);
+    }
     let listCard = "";
     if (store) {
         listCard = 
@@ -94,6 +108,10 @@ const HomeScreen = () => {
         <Typography variant="h2">Your Lists</Typography>
         </div>
 
+    let homeButtonColor = auth.pageNumber === 1 ? "green" : "black"
+    let groupsButtonColor = auth.pageNumber === 2 ? "green" : "black"
+    let personButtonColor = auth.pageNumber === 3 ? "green" : "black"
+    let sigmaButtonColor = auth.pageNumber === 4 ? "green" : "black"
     let homeButton = 
         <div id="top5-homebutton">
         <Button 
@@ -101,9 +119,9 @@ const HomeScreen = () => {
             aria-label="close"
             id="home-list-button"
             size="large"
-            // onClick={handleCreateNewList}
+            onClick={handleHomeScreenLoading}
         >
-            <HomeIcon style={{ fontSize: 50 ,color:'black'}}/>
+            <HomeIcon style={{ fontSize: 50 ,color:homeButtonColor}}/>
         </Button>
         </div>
 
@@ -114,9 +132,9 @@ const HomeScreen = () => {
             aria-label="close"
             id="all-list-button"
             size="large"
-            // onClick={handleCreateNewList}
+            onClick={handleAllUserScreenLoading}
         >
-            <GroupsIcon style={{ fontSize: 50 ,color:'black'}}/>
+            <GroupsIcon style={{ fontSize: 50 ,color:groupsButtonColor}}/>
         </Button>
         </div>
 
@@ -127,9 +145,9 @@ const HomeScreen = () => {
             aria-label="close"
             id="user-list-button"
             size="large"
-            // onClick={handleCreateNewList}
+            onClick={handleOneUserScreenLoading}
         >
-            <PersonIcon style={{ fontSize: 50 ,color:'black'}}/>
+            <PersonIcon style={{ fontSize: 50 ,color:personButtonColor}}/>
         </Button>
         </div>
 
@@ -140,9 +158,9 @@ const HomeScreen = () => {
             aria-label="close"
             id="community-list-button"
             size="large"
-            // onClick={handleCreateNewList}
+            onClick={handleCommunityScreenLoading}
         >
-            <FunctionsIcon style={{ fontSize: 50 ,color:'black'}}/>
+            <FunctionsIcon style={{ fontSize: 50 ,color:sigmaButtonColor}}/>
         </Button>
         </div>
 
