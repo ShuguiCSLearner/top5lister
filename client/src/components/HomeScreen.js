@@ -110,7 +110,6 @@ const HomeScreen = () => {
     }
     let listCard = "";
     if(store.filter === 1){ // New
-        console.log("store.filter: ", store.filter)
         store.idNamePairs.sort(function(x, y){return new Date(y.publishDate) - new Date(x.publishDate)})
         if(store.pageNumber === 1){
             if(store.text === ""){
@@ -774,10 +773,16 @@ const HomeScreen = () => {
             onClick={handleCreateNewList}
             disabled={auth.pageNumber !== 1}
         >
-            <AddIcon style={{ fontSize: 80 ,color: auth.pageNumber !== 1 ? 'grey' : 'black'}}/>
+            <AddIcon style={{ fontSize: 80 ,color: 'black'}}/>
         </IconButton>
-        <Typography variant="h2" style={{color: auth.pageNumber !== 1 ? 'grey' : 'black'}}>Your Lists</Typography>
+        <Typography variant="h2" style={{color: 'black'}}>Your Lists</Typography>
         </div>
+    if(auth.pageNumber !== 1){
+        statusBar =
+            <div id="top5-statusbar">
+                <Typography variant="h2">{store.text}</Typography>
+            </div>
+    }
 
     let homeButtonColor = auth.pageNumber === 1 ? "green" : "#e6e6e6"
     let groupsButtonColor = auth.pageNumber === 2 ? "green" : "#e6e6e6"

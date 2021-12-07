@@ -96,7 +96,7 @@ function ListCard(props) {
         >
             <DeleteIcon style={{fontSize:'24pt', color: 'black'}} />
         </IconButton>
-    if(auth.pageNumber != 1){
+    if(auth.pageNumber !== 1){
         deleteButton = ""
     }
     let authorText =  
@@ -104,6 +104,9 @@ function ListCard(props) {
             <Typography display="inline" sx={{my: 0, mx: 0}}>By:&nbsp;</Typography>
             <Typography display="inline" sx={{color: 'blue', textDecorationLine: "underline"}}>{idNamePair.ownerName}</Typography>
         </div>
+    if(auth.pageNumber === 4){
+        authorText = ""
+    }
     let viewText =
         <div>
             <Typography display="inline" sx={{my: 0, mx: 0}}>View:&nbsp;</Typography>
@@ -139,6 +142,16 @@ function ListCard(props) {
             <div className = 'item-list-board-item'>4. {idNamePair.items[3]}</div>
             <div className = 'item-list-board-item'>5. {idNamePair.items[4]}</div>
         </div>
+    if(auth.pageNumber === 4){
+        itemListBoard = 
+        <div id="itemListBoard">
+            <div className = 'item-list-board-item'><div>1. {idNamePair.items[0].substring(0,idNamePair.items[0].indexOf("point:"))}</div> <Typography>vote:{idNamePair.items[0].substring(idNamePair.items[0].indexOf("point:")+6)}</Typography></div>
+            <div className = 'item-list-board-item'><div>2. {idNamePair.items[1].substring(0,idNamePair.items[1].indexOf("point:"))}</div> <Typography>vote:{idNamePair.items[1].substring(idNamePair.items[1].indexOf("point:")+6)}</Typography></div>
+            <div className = 'item-list-board-item'><div>3. {idNamePair.items[2].substring(0,idNamePair.items[2].indexOf("point:"))}</div> <Typography>vote:{idNamePair.items[2].substring(idNamePair.items[2].indexOf("point:")+6)}</Typography></div>
+            <div className = 'item-list-board-item'><div>4. {idNamePair.items[3].substring(0,idNamePair.items[3].indexOf("point:"))}</div> <Typography>vote:{idNamePair.items[3].substring(idNamePair.items[3].indexOf("point:")+6)}</Typography></div>
+            <div className = 'item-list-board-item'><div>5. {idNamePair.items[4].substring(0,idNamePair.items[4].indexOf("point:"))}</div> <Typography>vote:{idNamePair.items[4].substring(idNamePair.items[4].indexOf("point:")+6)}</Typography></div>
+        </div>
+    }
     
     let commentBoard =
         <div id = "commentBoard">

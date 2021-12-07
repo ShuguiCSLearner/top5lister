@@ -30,6 +30,8 @@ export const deleteTop5ListById = (id) => api.delete(`/top5list/${id}`)
 export const getTop5ListById = (id) => api.get(`/top5list/${id}`)
 export const getAllTop5ListPairs = () => api.get(`/alltop5listpairs/`)
 export const getTop5CommunityListPairs = () => api.get(`/communitytop5listpairs/`)
+export const getTop5CommunityListByName = (query) => api.get(`/communityList/`, {params: query}) // imitating the style from stackOverFlow
+//router.get('/communityList', auth.verify, Top5ListController.getTop5CommunityListByName)
 
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const registerUser = (payload) => api.post(`/register/`, payload)
@@ -45,6 +47,7 @@ const apis = {
     getTop5ListById,
     getAllTop5ListPairs,
     getTop5CommunityListPairs,
+    getTop5CommunityListByName,
 
     getLoggedIn,
     registerUser,

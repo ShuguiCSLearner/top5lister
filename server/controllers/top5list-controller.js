@@ -61,6 +61,7 @@ updateTop5List = async (req, res) => {
         // }
 
         top5List.name = body.name
+        top5List.nameLower = body.nameLower
         top5List.items = body.items
         top5List.hasPublished = body.hasPublished
         top5List.view = body.view
@@ -267,6 +268,22 @@ getTop5CommunityListPairs  = async (req, res) => {
         }
     }).catch(err => console.log(err))
 }
+getTop5CommunityListByName = async (req, res) => {
+    const inputname = req.query[0];
+    console.log("input NAME: ",inputname)
+    await Top5List.findOne({name: inputname, isCommunity: true}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (top5Lists) {
+            return res.status(200).json({ success: true, list: top5Lists})
+        }
+        else {
+            return res.status(200).json({ success: false, list: null})
+        }
+    }).catch(err => console.log(err))
+}
+
 
 module.exports = {
     createTop5List,
@@ -276,5 +293,6 @@ module.exports = {
     getTop5ListPairs,
     getTop5ListById,
     getTop5AllListPairs,
-    getTop5CommunityListPairs //community list pairs
+    getTop5CommunityListPairs, //community list pairs
+    getTop5CommunityListByName
 }

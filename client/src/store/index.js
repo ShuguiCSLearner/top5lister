@@ -1091,12 +1091,45 @@ function GlobalStoreContextProvider(props) {
         }
         store.closeCurrentList();
     }
-    
+    // store.createNewList = async function () {
+    //     let newListName = "Untitled" + store.newListCounter;
+    //     let payload = {
+    //         name: newListName,
+    //         items: ["?", "?", "?", "?", "?"],
+    //         ownerEmail: auth.user.email,
+    //         ownerName: auth.user.firstName + " "+ auth.user.lastName,
+    //         view: 0,
+    //         like: 0,
+    //         likeList: [],
+    //         dislike: 0,
+    //         dislikeList: [],
+    //         comments: [],
+    //         isCommunity: false,
+    //         hasPublished: false,
+    //         publishDate: new Date()
+    //     };
+    //     const response = await api.createTop5List(payload);
+    //     if (response.data.success) {
+    //         let newList = response.data.top5List;
+    //         storeReducer({
+    //             type: GlobalStoreActionType.CREATE_NEW_LIST,
+    //             payload: newList
+    //         }
+    //         );
+
+    //         // IF IT'S A VALID LIST THEN LET'S START EDITING IT
+    //         history.push("/top5list/" + newList._id);
+    //     }
+    //     else {
+    //         console.log("API FAILED TO CREATE A NEW LIST");
+    //     }
+    // }
     store.publishList = async function (listName, itemName1, itemName2, itemName3, itemName4, itemName5){
         let response = await api.getTop5ListById(store.currentList._id);
         if (response.data.success) {
             let top5List = response.data.top5List;
             top5List.name = listName;
+            top5List.nameLower = listName.toLowerCase();
             top5List.items[0] = itemName1;
             top5List.items[1] = itemName2;
             top5List.items[2] = itemName3;
@@ -1118,48 +1151,41 @@ function GlobalStoreContextProvider(props) {
                                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                                     payload: pairsArray
                                 });
+                                async function checkCommunityList(top5List){
+                                    response = await api.getTop5CommunityListByName(listName);
+                                    if(response.data.success){ // payload:response.data.list
+                                        console.log(response.data.list._id)
+                                    }
+                                    else{// create one
+                                        async function createCommunityList(top5List){
+                                            let payload ={
+                                                name: listName.toLowerCase(),
+                                                items: [itemName1.toLowerCase() + "point:" + 5, itemName2.toLowerCase() + "point:" + 4, itemName3.toLowerCase() + "point:" + 3, itemName4.toLowerCase() + "point:" + 2, itemName5.toLowerCase() + "point:" + 1],
+                                                ownerEmail: " ",
+                                                ownerName: " ",
+                                                view: 0,
+                                                like: 0,
+                                                likeList: [],
+                                                dislike: 0,
+                                                dislikeList: [],
+                                                comments: [],
+                                                isCommunity: true,
+                                                hasPublished: true,
+                                                publishDate: new Date(),
+                                                publishDateFormat: new Date().toLocaleString('default', {month:'short'}) + " " + new Date().getDate() + ", " + new Date().getFullYear()
+                                            };
+                                            const response = await api.createTop5List(payload);
+                                            if(response.data.success){
+                                                console.log("create Community List");
+                                            }
+                                        }
+                                        createCommunityList(top5List)
+                                    }
+                                }
+                                checkCommunityList(top5List)
                             }
                         }
                         getListPairs(top5List);
-                    }
-                    else if(store.pageNumber === 2){
-                        async function getAllListPairs(top5List){
-                            response = await api.getAllTop5ListPairs();
-                            if (response.data.success) {
-                                let pairsArray = response.data.idNamePairs;
-                                storeReducer({
-                                    type: GlobalStoreActionType.CHANGE_ALLUSER_SCREEN,
-                                    payload: pairsArray
-                                });
-                            }
-                        }
-                        getAllListPairs(top5List);
-                    }
-                    else if(store.pageNumber === 3){
-                        async function getAllListPairs(top5List){
-                            response = await api.getAllTop5ListPairs();
-                            if (response.data.success) {
-                                let pairsArray = response.data.idNamePairs;
-                                storeReducer({
-                                    type: GlobalStoreActionType.CHANGE_ONEUSER_SCREEN,
-                                    payload: pairsArray
-                                });
-                            }
-                        }
-                        getAllListPairs(top5List);
-                    }
-                    else if(store.pageNumber === 4){
-                        async function getAllListPairs(top5List){
-                            response = await api.getTop5CommunityListPairs();
-                            if (response.data.success) {
-                                let pairsArray = response.data.idNamePairs;
-                                storeReducer({
-                                    type: GlobalStoreActionType.CHANGE_COMMUNITYLIST_SCREEN,
-                                    payload: pairsArray
-                                });
-                            }
-                        }
-                        getAllListPairs(top5List);
                     }
                 }
             }
