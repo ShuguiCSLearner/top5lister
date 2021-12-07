@@ -1153,8 +1153,93 @@ function GlobalStoreContextProvider(props) {
                                 });
                                 async function checkCommunityList(top5List){
                                     response = await api.getTop5CommunityListByName(listName);
+                                    console.log("wtf", response);
                                     if(response.data.success){ // payload:response.data.list
-                                        console.log(response.data.list._id)
+                                        let newID = response.data.list._id;
+                                        async function updatingCommunityList(top5List){
+                                            response = await api.getTop5ListById(newID); // Got the list then update the score
+                                            if(response.data.success){
+                                                let top5List = response.data.top5List;
+                                                let itemList = top5List.items;
+                                                //1st iteration
+                                                let bool1 = false;
+                                                for(var i = 0; i < itemList.length; i++){
+                                                    if(itemList[i].substring(0, itemList[i].indexOf("point:")).toLowerCase() === itemName1.toLowerCase()){
+                                                        let newScore1 = itemList[i].substring(itemList[i].indexOf("point:")+6);
+                                                        let int1 = parseInt(newScore1) + 5;
+                                                        itemList[i] = itemName1.toLowerCase() + "point:" + int1;
+                                                        bool1 = true;
+                                                    }
+                                                }
+                                                if(bool1 === false){
+                                                    itemList.push(itemName1.toLowerCase() + "point:" + 5);
+                                                }
+                                                //2nd iteration
+                                                let bool2 = false;
+                                                for(var i = 0; i < itemList.length; i++){
+                                                    if(itemList[i].substring(0, itemList[i].indexOf("point:")).toLowerCase() === itemName2.toLowerCase()){
+                                                        let newScore2 = itemList[i].substring(itemList[i].indexOf("point:")+6);
+                                                        let int2 = parseInt(newScore2) + 4;
+                                                        itemList[i] = itemName2.toLowerCase() + "point:" + int2;
+                                                        bool2 = true;
+                                                    }
+                                                }
+                                                if(bool2 === false){
+                                                    itemList.push(itemName2.toLowerCase() + "point:" + 4);
+                                                }
+                                                //3rd iteration
+                                                let bool3 = false;
+                                                for(var i = 0; i < itemList.length; i++){
+                                                    if(itemList[i].substring(0, itemList[i].indexOf("point:")).toLowerCase() === itemName3.toLowerCase()){
+                                                        let newScore3 = itemList[i].substring(itemList[i].indexOf("point:")+6);
+                                                        let int3 = parseInt(newScore3) + 3;
+                                                        itemList[i] = itemName3.toLowerCase() + "point:" + int3;
+                                                        bool3 = true;
+                                                    }
+                                                }
+                                                if(bool3 === false){
+                                                    itemList.push(itemName3.toLowerCase() + "point:" + 3);
+                                                }
+                                                //4th iteration
+                                                let bool4 = false;
+                                                for(var i = 0; i < itemList.length; i++){
+                                                    if(itemList[i].substring(0, itemList[i].indexOf("point:")).toLowerCase() === itemName4.toLowerCase()){
+                                                        let newScore4 = itemList[i].substring(itemList[i].indexOf("point:")+6);
+                                                        let int4 = parseInt(newScore4) + 2;
+                                                        itemList[i] = itemName4.toLowerCase() + "point:" + int4;
+                                                        bool4 = true;
+                                                    }
+                                                }
+                                                if(bool4 === false){
+                                                    itemList.push(itemName4.toLowerCase() + "point:" + 2);
+                                                }
+                                                //5th iteration
+                                                let bool5 = false;
+                                                for(var i = 0; i < itemList.length; i++){
+                                                    if(itemList[i].substring(0, itemList[i].indexOf("point:")).toLowerCase() === itemName5.toLowerCase()){
+                                                        let newScore5 = itemList[i].substring(itemList[i].indexOf("point:")+6);
+                                                        let int5 = parseInt(newScore5) + 1;
+                                                        itemList[i] = itemName5.toLowerCase() + "point:" + int5;
+                                                        bool5 = true;
+                                                    }
+                                                }
+                                                if(bool5 === false){
+                                                    itemList.push(itemName5.toLowerCase() + "point:" + 1);
+                                                }
+                                                // sort based on point
+                                                itemList.sort(function(x, y){return parseInt(y.substring(y.indexOf("point:")+6)) - parseInt(x.substring(x.indexOf("point:")+6)) })
+                                                console.log('itemList: ',itemList);
+                                                top5List.items = itemList;
+                                                async function updateTop5ListByList(top5List){
+                                                    response = await api.updateTop5ListById(top5List._id, top5List);
+                                                    if(response.data.success){
+                                                        console.log("Updated Success");
+                                                    }
+                                                }
+                                                updateTop5ListByList(top5List)
+                                            }
+                                        }
+                                        updatingCommunityList(top5List)
                                     }
                                     else{// create one
                                         async function createCommunityList(top5List){

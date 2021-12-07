@@ -39,27 +39,22 @@ const HomeScreen = () => {
     function handleNewDateFilter(){
         setAnchorEl(null);
         store.changeFilter(1);
-        console.log("sort by new date");
     }
     function handleOldDateFilter(){
         setAnchorEl(null);
         store.changeFilter(2);
-        console.log("sort by old date");
     }
     function handleMostViewFilter(){
         setAnchorEl(null);
         store.changeFilter(3);
-        console.log("sort by most view");
     }
     function handleMostLikeFilter(){
         setAnchorEl(null);
         store.changeFilter(4);
-        console.log("sort by most like");
     }
     function handleMostDislikeFilter(){
         setAnchorEl(null);
         store.changeFilter(5);
-        console.log("sort by most dislike");
     }
     const menuId = 'sort-by-menu';
     const sortByMenu = (

@@ -18,11 +18,8 @@ export const AuthActionType = {
     LOGOUT_USER: "LOGOUT_USER",
     CHANGE_SCREEN: "CHANGE_SCREEN",
     UPDATE_SCREEN: "UPDATE_SCREEN",
-    CHANGE_NEW_DATE_FILTER: "CHANGE_NEW_DATE_FILTER",
-    CHANGE_OLD_DATE_FILTER: "CHANGE_OLD_DATE_FILTER",
-    CHANGE_VIEW_FILTER: "CHANGE_VIEW_FILTER",
-    CHANGE_MOST_LIKE_FILTER: "CHANGE_MOST_LIKE_FILTER",
-    CHANGE_MOST_DISLIKE_FILTER: "CHANGE_MOST_DISLIKE_FILTER"
+    LOGIN_AS_GUEST: "LOGIN_AS_GUEST",
+    LOGOUT_AS_GUEST: "LOGOUT_AS_GUEST"
 }
 
 function AuthContextProvider(props) {
@@ -32,7 +29,7 @@ function AuthContextProvider(props) {
         error: false,
         msg: null,
         pageNumber: 0,                 // 1: home , 2: allList, 3: user, 4: community
-        filterType: 1,                 // 1: New Date, 2: Old Date, 3: View, 4: Most Like, 5: Most Dislike
+        guest: 0
     });
     const history = useHistory();
     const { store } = useContext(GlobalStoreContext); 
@@ -70,7 +67,27 @@ function AuthContextProvider(props) {
                     msg: null,
                     pageNumber: 1
                 })
-            }case AuthActionType.ERROR_MODAL: { 
+            }
+            case AuthActionType.LOGIN_AS_GUEST: {
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: true,
+                    error: false,
+                    msg: null,
+                    pageNumber: 4
+                })
+            }
+            case AuthActionType.LOGOUT_AS_GUEST:{
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: false,
+                    error: false,
+                    msg: null,
+                    pageNumber: 0
+                })
+            }
+            
+            case AuthActionType.ERROR_MODAL: { 
                 return setAuth({
                     user: null,
                     loggedIn: false,
@@ -127,6 +144,14 @@ function AuthContextProvider(props) {
                 msg: null
             }
         });
+    }
+    auth.loginAsGuest = async function(){
+        authReducer({
+            type: AuthActionType.LOGIN_AS_GUEST,
+            payload: {
+                error: false
+            }
+        })
     }
 
 

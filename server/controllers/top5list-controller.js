@@ -269,7 +269,7 @@ getTop5CommunityListPairs  = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5CommunityListByName = async (req, res) => {
-    const inputname = req.query[0];
+    const inputname = req.query[0].toLowerCase();
     console.log("input NAME: ",inputname)
     await Top5List.findOne({name: inputname, isCommunity: true}, (err, top5Lists) => {
         if (err) {

@@ -133,12 +133,10 @@ let sortByButton =
     let save = true;
     function toggleSave(){
         save = false;
-        console.log("publishing");
     }
 
 
     const handleSubmit = (event) => {
-        console.log("submit")
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         let listName = formData.get('list-name-textfield');
